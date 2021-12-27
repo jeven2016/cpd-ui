@@ -32,23 +32,28 @@
     "web-vitals": "^2.1.0"
   },
   "devDependencies": {
+    "@craco/craco": "^6.4.3",
     "@typescript-eslint/eslint-plugin": "^5.8.0",
     "@typescript-eslint/parser": "^5.8.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
     "lodash": "^4.17.21",
     "prettier": "^2.5.1",
-    "sass": "^1.45.1"
+    "sass": "^1.45.1",
+    "serve": "^13.0.2",
+    "simple-progress-webpack-plugin": "^2.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "NODE_ENV=dev craco start",
+    "build": "NODE_ENV=production craco build",
+    "preview": "serve -s build",
+    "test": "NODE_ENV=dev craco test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "eslintConfig": {
@@ -67,6 +72,21 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{html,css,scss,md,json}": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
