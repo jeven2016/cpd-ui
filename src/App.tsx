@@ -1,9 +1,13 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import LoginIndex from '@/login/LoginIndex';
 
 function App() {
-  const a = '34';
-  const b = 4;
-  return <div className="App">hello</div>;
+  return (
+    <Routes>
+      <Route index element={LoginIndex} />
+    </Routes>
+  );
 }
 
 export default App;

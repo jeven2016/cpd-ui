@@ -13,12 +13,28 @@ module.exports = {
     plugins: [
       // 查看打包的进度
       new SimpleProgressWebpackPlugin()
-    ]
+    ],
+
+    configure: {
+
+    }
   },
   jest: {
     configure: {
       moduleNameMapper: {
         '@': '<rootDir>/src'
+      }
+    }
+  },
+  //配置接口跨域代理
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/api'
+        }
       }
     }
   }
