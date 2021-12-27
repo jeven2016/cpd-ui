@@ -1,4 +1,14 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-yarn commitlint --edit "$1"
+commit_regex='^Merge.+|(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|types)(\(.+\))?: .{1,50}'
+
+if ! grep -iqE "$commit_regex" "$1"; then
+echo
+echo "描述格式不正确,正确格式为: [Type]: [Summary]"
+echo "Type可选值为： Merge|feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert|types"
+echo "示例：git commit -m \"fix: 修复xx bug\""
+echo
+exit 1
+
+fi
