@@ -23,6 +23,10 @@
 **配置husky + link-staged**  
 
 ```text
+//安装依赖
+yarn add husky lint-staged
+
+//修改package.json
 "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
