@@ -1,0 +1,14 @@
+
+node_modules
+*.md
+*.woff
+*.ttf
+.idea
+build
+dist
+/public
+.husky
+.local
+config
+.eslintrc.json
+.*ignore
