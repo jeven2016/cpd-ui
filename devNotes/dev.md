@@ -1,12 +1,7 @@
 ### 创建工程
-                           
-
-
-
-  
 
 - create-react-app 文档地址：https://create-react-app.dev/docs/production-build
-- 创建typescript 工程
+- 创建 typescript 工程
 
 ```javascript
 原文链接：https://blog.csdn.net/u011521203/article/details/87546146yarn create react-app my-app --template typescript

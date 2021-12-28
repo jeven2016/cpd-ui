@@ -4,9 +4,10 @@ import LoginIndex from '@/login/LoginIndex';
 
 function App() {
   return (
-    <Routes>
-      <Route index element={LoginIndex} />
-    </Routes>
+    <div>hello</div>
+    // <Routes>
+    //   <Route index element={LoginIndex} />
+    // </Routes>
   );
 }
 
