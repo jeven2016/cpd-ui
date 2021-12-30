@@ -50,3 +50,10 @@ yarn add eslint-import-resolver-alias --dev
     }
   },
  ```
+**注意：在tsconfig.jso中的生效且能被idea识别的path是合并后的path, 这里就是"./src/*"**
+```text
+"baseUrl": ".",
+"paths": {
+  "@/*": ["src/*"]
+},
+```

@@ -1,0 +1,50 @@
+.c-container {
+  background: url('../assets/pic2.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+.c-login-container {
+  height: 100vh;
+
+  > .c-back {
+    background: rgba(0, 0, 200, 0.13);
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  > .c-login-row {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    align-items: stretch;
+
+    .c-login-col {
+      padding: 0 3rem;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+
+      .c-login-info {
+        margin-bottom: 2rem;
+        font-size: 2rem;
+
+        .icon {
+          font-size: 2rem !important;
+        }
+      }
+
+      form {
+        width: 100%;
+      }
+    }
+  }
+}

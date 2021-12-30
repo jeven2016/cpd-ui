@@ -12,3 +12,7 @@ dist
 config
 .eslintrc.json
 .*ignore
+
+./craco.config.js
+./commitlint.config.js
+./src/types

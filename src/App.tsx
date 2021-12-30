@@ -1,13 +1,22 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import LoginIndex from '@/login/LoginIndex';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LoginPage from '@/login/LoginPage';
+import Container from '@/layout/Container';
+import Home from '@/layout/Home';
 
 function App() {
   return (
-    <div>hello</div>
-    // <Routes>
-    //   <Route index element={LoginIndex} />
-    // </Routes>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Container />}>
+            <Route path="/platform" element={<Home />} />
+            <Route index={true} element={<LoginPage />} />
+          </Route>
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
