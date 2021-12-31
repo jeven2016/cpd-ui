@@ -1,15 +1,11 @@
 ### 创建工程
-                           
-
-
-
-  
 
 - create-react-app 文档地址：https://create-react-app.dev/docs/production-build
-- 创建typescript 工程
+- 创建 typescript 工程
 
 ```javascript
-原文链接：https://blog.csdn.net/u011521203/article/details/87546146yarn create react-app my-app --template typescript
+原文链接：https://blog.csdn.net/u011521203/article/details/87546146
+yarn create react-app my-app --template typescript
 ```
 
 - init eslint 并得到.eslintrc.json 文件
@@ -113,6 +109,15 @@ refer to : https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.
  //idea多行编辑
  ALT + shift + insert 进入多行编辑模式
 ```
+
+### Others
+- create-react-app已经支持热更新，不需要自行设置
+
+
+### 首页图片
+下载地址：https://pixabay.com/photos/woman-floating-portrait-attractive-1866858/  
+
+https://pixabay.com/photos/asia-woman-washing-clothes-stream-1807538/
 
 ## TODO
 

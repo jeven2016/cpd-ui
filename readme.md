@@ -7,7 +7,7 @@
 yarn start
 
 //编译
-yarn run build 
+yarn run build
 
 //预览编译后的文件
 yarn run preview

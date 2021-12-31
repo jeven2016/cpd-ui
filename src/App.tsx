@@ -1,9 +1,23 @@
 import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import LoginPage from '@/login/LoginPage';
+import Container from '@/layout/Container';
+import Home from '@/layout/Home';
 
 function App() {
-  const a = '34';
-  const b = 4;
-  return <div className="App">hello</div>;
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Container />}>
+            <Route path="/platform" element={<Home />} />
+            <Route index={true} element={<LoginPage />} />
+          </Route>
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
