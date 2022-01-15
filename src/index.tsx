@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import '@/styles/wui-dark.css';
+import 'react-windy-ui/dist/wui-dark.css';
 import '@/styles/default.scss';
 
 ReactDOM.render(<App />, document.getElementById('root'));

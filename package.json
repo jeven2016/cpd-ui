@@ -10,6 +10,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.20",
     "@types/react-dom": "^17.0.9",
+    "antd": "^4.18.3",
     "axios": "^0.24.0",
     "connected-react-router": "^6.9.2",
     "core-js": "^3.20.1",
@@ -69,7 +70,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json,svg,scss}' --config ./.prettierrc",
     "prepare": "husky install",
     "genlog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "commit": "git-cz"
@@ -103,7 +104,7 @@
       "eslint --fix",
       "git add"
     ],
-    "src/**/*.{html,css,scss,md,json}": [
+    "src/**/*.{html,js,jsx,ts,tsx,css,md,json,svg,scss}": [
       "prettier --write",
       "git add"
     ]

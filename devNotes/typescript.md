@@ -58,3 +58,13 @@ interface AjaxSettings {
 ```text
 "noImplicitAny": false,
 ```
+
+### tsc编译时创建js文件 
+```text
+"noEmit": false
+```
+- 语法
+    - interface
+```text
+   
+```

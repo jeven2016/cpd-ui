@@ -48,3 +48,12 @@
     }
   }
 }
+
+.c-article-body {
+  background: radial-gradient(
+    circle at left top,
+    rgb(83 59 189 / 90%) 15%,
+    rgba(12, 63, 153, 0.9) 50%,
+    rgb(50 26 159 / 90%) 85%
+  );
+}
