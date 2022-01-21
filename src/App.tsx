@@ -1,21 +1,19 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from '@/login/LoginPage';
-import Container from '@/book_mgr/Container';
-import Home from '@/book_mgr/Home';
-import Welcome from '@/book_mgr/Welcome';
-import ForumHome from '@/book_mgr/ForumHome';
+import Container from '@/layout/Container';
+import Home from '@/layout/Home';
 
 function App() {
   return (
+    // <Routes>
+    //   <Route index element={LoginIndex} />
+    // </Routes>
     <>
       <BrowserRouter>
         <Routes>
           <Route element={<Container />}>
-            <Route path="/platform" element={<Home />}>
-              <Route index element={<Welcome />} />
-              <Route path={`forums/:id`} element={<ForumHome />} />
-            </Route>
+            <Route path="/platform" element={<Home />} />
             <Route index={true} element={<LoginPage />} />
           </Route>
           <Route path="*" element={<div>404</div>} />
