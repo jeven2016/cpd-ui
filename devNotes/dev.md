@@ -119,6 +119,10 @@ refer to : https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.
 
 https://pixabay.com/photos/asia-woman-washing-clothes-stream-1807538/
 
+### "type": "module"引起的问题
+"type": "module",表明文件需要以es6的import模式引入，如果是使用了babel编译后的文件，在导入使用时报错： no default export
+
+
 ## TODO
 
 - Redux Thunk Redux 的异步处理中间件

@@ -27,6 +27,7 @@
       ]
     }
   },
+  "files": ["node_modules/react-windy-ui/dist/index.d.ts"], // ts 定义文件引入
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",

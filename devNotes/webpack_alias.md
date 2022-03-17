@@ -57,3 +57,13 @@ yarn add eslint-import-resolver-alias --dev
   "@/*": ["src/*"]
 },
 ```
+
+## ES6语法编写的react组件发布后无法使用
+为何在本地引入未出现打包报错，而发布后从 NPM 社区引入就出现这种错误？  
+原来，在webpack配置中，babel加载器中有个exclude配置属性设置成了node_modules，这将导致打包时默认对node_modules文件夹中的包不进行babel转码，
+而仅仅对app.js进行转码，这样就导致打包出现错误。  
+
+如何解决这个？
+从打包效率上说，默认对node_modules文件夹中不进行babel转码，有助于提升打包效率。因此我选择将该组件先转化为ES5语法，然后发布到 NPM 社区，
+babel-loader 允许使用 ES6 语法进行开发，但目前 NPM 社区上的大部分开源包都是 ES5 语法定义的，
+因此在发布自己的组件时要转换为ES5语法格式
