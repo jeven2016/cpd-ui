@@ -8,6 +8,7 @@ import CustomerList from '@/pages/customer/CustomerList';
 import CustomerHome from '@/pages/customer/CustomerHome';
 import CustomerDetails from '@/pages/customer/CustomerDetails';
 import CatalogList from '@/pages/books/CatalogList';
+import ArticleList from '@/pages/books/ArticleList';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             </Route>
             <Route path="/books" element={<Home />}>
               <Route path="catalogs" element={<CatalogList />} />
+              <Route path="catalogs/:id/articles" element={<ArticleList />} />
             </Route>
             <Route index={true} element={<LoginPage />} />
           </Route>

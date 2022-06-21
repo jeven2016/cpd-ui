@@ -53,14 +53,16 @@ module.exports = {
   },
   //配置接口跨域代理
   devServer: {
+    port: 8088,
     proxy: {
-      '/realms': {
-        target: 'http://localhost:9999',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/realms': '/realms'
-        }
-      }
+      '/api': 'http://localhost:9999'
+      // '/api': {
+      //   target: 'http://localhost:9999',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': '/api'
+      //   }
+      // }
     }
   }
 };
