@@ -1,0 +1,199 @@
+$default_background: radial-gradient(
+  circle at left top,
+  rgba(98, 72, 213, 0.9) 15%,
+  #0c3f99e6 50%,
+  #043b9de6 85%
+);
+$default_box_shadow: rgb(0 0 0 / 10%) 0rem 0.25rem 0.375rem -0.0625rem,
+  rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+body {
+  font: 1rem/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
+    Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  background: #f7f9fc;
+  color: #6c757d;
+}
+
+#root {
+  height: 100vh;
+  width: 100%;
+
+  .base-layout {
+    height: 100%;
+
+    .navbar {
+      border-radius: 0;
+      background: #fff;
+    }
+  }
+
+  .layout-split {
+    //height: calc(100vh - 4rem);
+
+    .layout-slider {
+      color: #fff;
+      background: #2d6bcf;
+      position: fixed;
+      height: 100%;
+      overflow-y: auto;
+      left: 0;
+      top: 0;
+      background: $default_background;
+      box-shadow: $default_box_shadow;
+
+      > .slider-inner {
+        &::before {
+          content: '';
+          width: 100%;
+          height: 100%;
+          //left: 0;
+          //top: 0;
+          background: rgba(0, 0, 0, 1);
+        }
+      }
+
+      .menu-item {
+        margin: 0 1.5rem;
+        border-radius: 0.25rem;
+        color: rgba(255, 255, 255, 0.65);
+        text-shadow: none;
+
+        &::after {
+          display: none;
+        }
+
+        &:hover {
+          color: #fff;
+        }
+
+        &.active {
+          //background: #fff;
+          background: #dd740a;
+          color: #fff;
+          box-shadow: $default_box_shadow;
+        }
+
+        + .menu-item {
+          margin-top: 0.5rem;
+        }
+      }
+
+      .slider-title {
+        display: flex;
+        flex: 1 1 auto;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.25rem;
+        padding: 1rem 0 2.5rem;
+        font-weight: 600;
+      }
+    }
+
+    .content-area {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: $default_box_shadow;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      > .content-info {
+        width: 60%;
+      }
+    }
+
+    .layout-content {
+      background: transparent;
+    }
+  }
+
+  .customer-panel {
+    + .card {
+      margin-top: 1rem;
+    }
+  }
+
+  .content-header {
+    display: flex;
+    flex: 1 1 100%;
+
+    > .breadcrumb {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+.c-container {
+  background-size: cover;
+  background: url('../assets/bg.png') no-repeat;
+}
+
+.c-login-container {
+  height: 100vh;
+
+  > .c-back {
+    background: rgba(0, 0, 200, 0.13);
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+
+  > .c-login-row {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    align-items: stretch;
+
+    .c-login-col {
+      padding: 0 3rem;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      //align-items: center;
+      height: 100%;
+      background: $default_background;
+      box-shadow: $default_box_shadow;
+
+      .input {
+        color: rgba(255, 255, 255, 1);
+      }
+
+      .c-login-info {
+        margin-bottom: 2rem;
+        font-size: 2rem;
+
+        .icon {
+          font-size: 2rem !important;
+        }
+      }
+
+      form {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.login-form {
+  > .form-item + .form-item {
+    margin-top: 1rem;
+  }
+}
+
+.site-icon {
+  color: rgb(73, 184, 71);
+  animation: rotation infinite 5s linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

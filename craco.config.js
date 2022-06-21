@@ -54,11 +54,11 @@ module.exports = {
   //配置接口跨域代理
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
+      '/realms': {
+        target: 'http://localhost:9999',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api'
+          '^/realms': '/realms'
         }
       }
     }
