@@ -7,27 +7,19 @@ import {
   Dropdown,
   IconHome,
   IconList,
+  Input,
+  Pagination,
   Row,
   Space,
   Table,
   Tooltip
 } from 'react-windy-ui';
 import IconChangeView from '@/common/icons/IconChangeView';
-import React, { useEffect, useState } from 'react';
+import React, { FormEventHandler, useCallback, useEffect, useState } from 'react';
 import IconFillStar from '@/common/icons/IconFillStar';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
-
-const data = (() => {
-  const array = Array(20);
-  return [...array.keys()].map((key, index) => ({
-    key: key,
-    name: 'Nanjing' + index,
-    place: '四川税务管理局一部',
-    desc: 'Description',
-    actions: <div style={{ color: '#0ca0ff' }}>Delete</div>
-  }));
-})();
+import { tab } from '@testing-library/user-event/dist/tab';
 
 const CardList = () => {
   const array = Array(20);
@@ -81,23 +73,37 @@ const CardList = () => {
 
 const cells = [
   {
+    key: 'index',
+    head: '序号',
+    paramName: 'index',
+    sortable: true,
+    // fixed: 'left' as const,
+    width: '50px',
+    format: (text, row, tableIndex) => {
+      return tableIndex + 1;
+    }
+  },
+  {
     key: 'name',
     head: '名称',
     paramName: 'name',
     sortable: false,
-    fixed: 'left' as const,
-    width: '110px'
+    format: (text, row) => {
+      return <Link to={`/books/articles/${row.id}`}>{text}</Link>;
+    }
   },
   {
     key: 'createDate',
     head: '创建日期',
     paramName: 'createDate',
-    sortable: true
+    sortable: true,
+    width: '250px'
   },
   {
     head: '操作',
     paramName: 'actions',
-    fixed: 'right' as const
+    // fixed: 'right' as const,
+    width: '100px'
   }
 ];
 
@@ -107,24 +113,6 @@ const colConf = {
   lg: 4,
   xl: 3
 };
-
-interface Article {
-  id: string;
-  name: string;
-  content?: string;
-  catalogId: string;
-}
-
-interface PageInfo {
-  page: number;
-  totalPage: number;
-  pageSize: number;
-  totalRecords: number;
-  code: any;
-  message: string;
-  payload?: Article[];
-  errors: string;
-}
 
 export default function ArticleList() {
   const [type, setType] = useState<string>('table');
@@ -137,9 +125,21 @@ export default function ArticleList() {
     axios
       .get(`/api/v1/catalogs/${id}/articles?page=${page}&pageSize=${pageSize}`)
       .then((res: AxiosResponse<PageInfo>) => {
+        res.data?.payload?.forEach((data) => {
+          data.key = data.id;
+        });
         set(res.data);
       });
   }, [page, pageSize]);
+
+  const goTo = useCallback((page: number, limit: number, e: MouseEvent) => {
+    setPageSize(limit);
+    setPage(page);
+  }, []);
+
+  const changePageSize = useCallback((pageSize: number, e: MouseEvent) => {
+    setPageSize(pageSize);
+  }, []);
 
   return (
     <div className="content-area">
@@ -151,10 +151,9 @@ export default function ArticleList() {
                 <Breadcrumb.Item>
                   <IconHome />
                 </Breadcrumb.Item>
-                <Breadcrumb.Item>客户管理</Breadcrumb.Item>
-                <Breadcrumb.Item active>客户列表</Breadcrumb.Item>
+                <Breadcrumb.Item>书库</Breadcrumb.Item>
+                <Breadcrumb.Item active>文章列表</Breadcrumb.Item>
               </Breadcrumb>
-
               <Space>
                 <Dropdown
                   activeBy="hover"
@@ -182,24 +181,26 @@ export default function ArticleList() {
             <Row style={{ marginBottom: '1.5rem' }}>
               <Col>
                 <Space>
-                  <Button color="green">添加客户</Button>
+                  <Input />
+                  <Button type="primary">搜索</Button>
                 </Space>
               </Col>
               <Col></Col>
             </Row>
             {type === 'table' && (
-              <div style={{ overflowX: 'auto' }}>
-                <Table
-                  loadData={pageInfo?.payload}
-                  cells={cells}
-                  hover={true}
-                  type="striped"
-                  scrollX={true}
-                  scrollY={true}
-                  bodyWidth={1500}
-                  bodyHeight={600}
+              <>
+                <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
+                <Pagination
+                  hasPageRange
+                  pageCount={pageInfo?.totalPage}
+                  page={pageInfo?.page}
+                  pageRanges={[10, 20, 50, 100]}
+                  pageRange={pageSize}
+                  onChangeRange={changePageSize}
+                  siblingCount={2}
+                  onChange={goTo}
                 />
-              </div>
+              </>
             )}
 
             {type === 'card' && (

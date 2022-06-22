@@ -3,22 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 
-interface Catalog {
-  id: string;
-  parentId: string;
-  name?: string;
-  order?: number;
-  articleCount: number;
-  description?: string;
-}
-
-interface CatalogPaload {
-  payload: {
-    Count: number;
-    List: Catalog[];
-  };
-}
-
 export default function CatalogList() {
   const navigate = useNavigate();
   const [catalogs, set] = useState<CatalogPaload | null>(null);
@@ -49,12 +33,7 @@ export default function CatalogList() {
                       <h3>{c.name || 'City Name'}</h3>
                     </Card.Header>
                     <Divider />
-                    <Card.Body>
-                      {c.description ||
-                        'China`&apos;s largest and most important building, the Forbidden City — also\n' +
-                          '                        known as the Imperial Palace — is situated in the very heart of Beijing and\n' +
-                          '                        is a must-see when visiting the country.'}
-                    </Card.Body>
+                    <Card.Body style={{ minHeight: '7rem' }}>{c.description}</Card.Body>
                     <Divider />
                     <Card.Footer>
                       <div
