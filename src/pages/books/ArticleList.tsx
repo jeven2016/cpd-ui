@@ -97,14 +97,14 @@ const cells = [
     head: '创建日期',
     paramName: 'createDate',
     sortable: true,
-    width: '250px'
-  },
-  {
-    head: '操作',
-    paramName: 'actions',
-    // fixed: 'right' as const,
-    width: '100px'
+    width: '200px'
   }
+  // {
+  //   head: '操作',
+  //   paramName: 'actions',
+  //   // fixed: 'right' as const,
+  //   width: '100px'
+  // }
 ];
 
 const colConf = {
@@ -143,74 +143,72 @@ export default function ArticleList() {
 
   return (
     <div className="content-area">
-      <div style={{ width: '100%', height: '100%', padding: '2rem' }}>
-        <Card block hasBox={false} style={{ overflow: 'hidden', alignSelf: 'flex-start' }}>
-          <Card.Header>
-            <div className="content-header">
-              <Breadcrumb style={{ marginBottom: '0' }}>
-                <Breadcrumb.Item>
-                  <IconHome />
-                </Breadcrumb.Item>
-                <Breadcrumb.Item>书库</Breadcrumb.Item>
-                <Breadcrumb.Item active>文章列表</Breadcrumb.Item>
-              </Breadcrumb>
+      <Card block hasBox={false} style={{ overflow: 'hidden', alignSelf: 'flex-start' }}>
+        <Card.Header>
+          <div className="content-header">
+            {/*<Breadcrumb style={{ marginBottom: '0' }}>*/}
+            {/*  <Breadcrumb.Item>*/}
+            {/*    <IconHome />*/}
+            {/*  </Breadcrumb.Item>*/}
+            {/*  <Breadcrumb.Item>书库</Breadcrumb.Item>*/}
+            {/*  <Breadcrumb.Item active>文章列表</Breadcrumb.Item>*/}
+            {/*</Breadcrumb>*/}
+            <Space>
+              <Dropdown
+                activeBy="hover"
+                position="bottomRight"
+                title={
+                  <Tooltip body="切换视图">
+                    <span style={{ color: '#dd740a', cursor: 'pointer', fontSize: '1.5rem' }}>
+                      <IconChangeView />
+                    </span>
+                  </Tooltip>
+                }>
+                <Dropdown.Menu>
+                  <Dropdown.Item id="item1" onClick={() => setType('card')}>
+                    卡片排列
+                  </Dropdown.Item>
+                  <Dropdown.Item id="item2" onClick={() => setType('table')}>
+                    列表排列
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Space>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          <Row style={{ marginBottom: '1.5rem' }}>
+            <Col>
               <Space>
-                <Dropdown
-                  activeBy="hover"
-                  position="bottomRight"
-                  title={
-                    <Tooltip body="切换视图">
-                      <span style={{ color: '#dd740a', cursor: 'pointer', fontSize: '1.5rem' }}>
-                        <IconChangeView />
-                      </span>
-                    </Tooltip>
-                  }>
-                  <Dropdown.Menu>
-                    <Dropdown.Item id="item1" onClick={() => setType('card')}>
-                      卡片排列
-                    </Dropdown.Item>
-                    <Dropdown.Item id="item2" onClick={() => setType('table')}>
-                      列表排列
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <Input />
+                <Button type="primary">搜索</Button>
               </Space>
-            </div>
-          </Card.Header>
-          <Card.Body>
-            <Row style={{ marginBottom: '1.5rem' }}>
-              <Col>
-                <Space>
-                  <Input />
-                  <Button type="primary">搜索</Button>
-                </Space>
-              </Col>
-              <Col></Col>
-            </Row>
-            {type === 'table' && (
-              <>
-                <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
-                <Pagination
-                  hasPageRange
-                  pageCount={pageInfo?.totalPage}
-                  page={pageInfo?.page}
-                  pageRanges={[10, 20, 50, 100]}
-                  pageRange={pageSize}
-                  onChangeRange={changePageSize}
-                  siblingCount={2}
-                  onChange={goTo}
-                />
-              </>
-            )}
+            </Col>
+            <Col></Col>
+          </Row>
+          {type === 'table' && (
+            <>
+              <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
+              <Pagination
+                hasPageRange
+                pageCount={pageInfo?.totalPage}
+                page={pageInfo?.page}
+                pageRanges={[10, 20, 50, 100]}
+                pageRange={pageSize}
+                onChangeRange={changePageSize}
+                siblingCount={2}
+                onChange={goTo}
+              />
+            </>
+          )}
 
-            {type === 'card' && (
-              <Row gutter={{ x: 16, y: 16 }}>
-                <CardList />
-              </Row>
-            )}
-          </Card.Body>
-        </Card>
-      </div>
+          {type === 'card' && (
+            <Row gutter={{ x: 16, y: 16 }}>
+              <CardList />
+            </Row>
+          )}
+        </Card.Body>
+      </Card>
     </div>
   );
 }

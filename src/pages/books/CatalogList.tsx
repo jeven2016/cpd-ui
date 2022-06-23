@@ -20,45 +20,39 @@ export default function CatalogList() {
 
   return (
     <div className="content-area">
-      <div style={{ width: '100%', height: '100%', padding: '2rem' }}>
-        <h2>列表：</h2>
-        <Divider />
-        <div style={{ marginTop: '1rem' }}>
-          <Row gutter={{ x: 16, y: 16 }}>
-            {list.map((c: Catalog, index: number) => {
-              return (
-                <Col xs={12} sm={6} md={3} key={`col-${index}`}>
-                  <Card autoScale block style={{ background: '#fff' }}>
-                    <Card.Header>
-                      <h3>{c.name || 'City Name'}</h3>
-                    </Card.Header>
-                    <Divider />
-                    <Card.Body style={{ minHeight: '7rem' }}>{c.description}</Card.Body>
-                    <Divider />
-                    <Card.Footer>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center'
-                        }}>
-                        <h5>37000篇文章， 5882页</h5>
-                        <Button
-                          size="small"
-                          inverted
-                          color="primary"
-                          onClick={() => showArticles(c.id)}>
-                          进入
-                        </Button>
-                      </div>
-                    </Card.Footer>
-                  </Card>
-                </Col>
-              );
-            })}
-          </Row>
-        </div>
-      </div>
+      <Row gutter={{ x: 16, y: 16 }}>
+        {list.map((c: Catalog, index: number) => {
+          return (
+            <Col xs={12} sm={6} md={3} key={`col-${index}`}>
+              <Card autoScale block extraClassName="white-panel">
+                <Card.Header>
+                  <h3>{c.name || 'City Name'}</h3>
+                </Card.Header>
+                <Divider />
+                <Card.Body style={{ minHeight: '7rem' }}>{c.description}</Card.Body>
+                <Divider />
+                <Card.Footer>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                    <h5>37000篇文章， 5882页</h5>
+                    <Button
+                      size="small"
+                      inverted
+                      color="primary"
+                      onClick={() => showArticles(c.id)}>
+                      进入
+                    </Button>
+                  </div>
+                </Card.Footer>
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
     </div>
   );
 }

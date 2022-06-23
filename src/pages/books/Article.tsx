@@ -21,7 +21,7 @@ export default function Article() {
           fontSize: '1.25rem!important',
           width: '100%',
           height: '100%',
-          borderRadius: '.5rem',
+          borderRadius: '.25rem',
           padding: '2rem',
           // background: 'rgb(226,203,173)'
           background: 'rgb(241,229,201)'

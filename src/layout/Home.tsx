@@ -1,6 +1,18 @@
-import { Button, Dropdown, IconAccount, Layout, Menu, Navbar, Space } from 'react-windy-ui';
+import {
+  Affix,
+  Breadcrumb,
+  Button,
+  Card,
+  Dropdown,
+  IconAccount,
+  IconHome,
+  Layout,
+  Menu,
+  Navbar,
+  Space
+} from 'react-windy-ui';
 import HomeIcon from '@/common/icons/HomeIcon';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import IconCustomerMgr from '@/common/icons/IconCustomerMgr';
 import IconSystem from '@/common/icons/IconSystem';
 import IconCollapse from '@/common/icons/IconCollapse';
@@ -55,35 +67,43 @@ export default function Home() {
             collapseAttribute={collapseAttribute}
             collapse={!collapse}
             style={{ overflowY: 'auto' }}>
-            <Navbar hasBorder={false}>
-              <Navbar.Title>
-                <Button circle inverted color="gray">
-                  <IconCollapse style={{ fontSize: '1.5rem' }} />
-                </Button>
-              </Navbar.Title>
-              <Navbar.List justify="end">
-                <Navbar.Item>
-                  <Dropdown
-                    position="bottomRight"
-                    title={
-                      <Button circle color="blue" inverted hasBox={false} hasRipple={false}>
-                        <IconAccount />
-                      </Button>
-                    }>
-                    <Dropdown.Menu>
-                      <Dropdown.Item id="item2">退出</Dropdown.Item>
-                      <Dropdown.Item id="item3">个人设置</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                </Navbar.Item>
-              </Navbar.List>
-            </Navbar>
-
-            <Layout.Content
-              style={{
-                // minHeight: '15rem',
-                padding: '2rem'
-              }}>
+            <Affix top={0} block={false}>
+              <Navbar hasBorder={false} extraClassName="navbar-header">
+                <Navbar.Title>
+                  <Button circle inverted color="gray">
+                    <IconCollapse style={{ fontSize: '1.5rem' }} />
+                  </Button>
+                </Navbar.Title>
+                <Navbar.List justify="end">
+                  <Navbar.Item>
+                    <Dropdown
+                      position="bottomRight"
+                      title={
+                        <Button circle color="blue" inverted hasBox={false} hasRipple={false}>
+                          <IconAccount />
+                        </Button>
+                      }>
+                      <Dropdown.Menu>
+                        <Dropdown.Item id="item2">退出</Dropdown.Item>
+                        <Dropdown.Item id="item3">个人设置</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Navbar.Item>
+                </Navbar.List>
+              </Navbar>
+            </Affix>
+            <Layout.Content extraClassName="c-layout-content">
+              <Card block hasBox={false} extraClassName="white-panel">
+                <Card.Header>
+                  <Breadcrumb style={{ marginBottom: '0' }}>
+                    <Breadcrumb.Item>
+                      <IconHome />
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>书库</Breadcrumb.Item>
+                    <Breadcrumb.Item active>文章列表</Breadcrumb.Item>
+                  </Breadcrumb>
+                </Card.Header>
+              </Card>
               <Outlet />
             </Layout.Content>
           </Layout>
