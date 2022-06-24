@@ -1,11 +1,9 @@
 import {
   Box,
-  Breadcrumb,
   Button,
   Card,
   Col,
   Dropdown,
-  IconHome,
   IconList,
   Input,
   Pagination,
@@ -15,42 +13,29 @@ import {
   Tooltip
 } from 'react-windy-ui';
 import IconChangeView from '@/common/icons/IconChangeView';
-import React, { FormEventHandler, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import IconFillStar from '@/common/icons/IconFillStar';
 import { Link, useParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
-import { tab } from '@testing-library/user-event/dist/tab';
 
-const CardList = () => {
-  const array = Array(20);
+interface CardListProps {
+  list?: Article[];
+}
+
+const CardList = ({ list = [] }: CardListProps): JSX.Element => {
   return (
     <>
-      {React.Children.map([...array.keys()], (key, index) => (
-        <Col key={key} {...colConf}>
-          <Card block hasBox={false} hasBorder>
+      {list.map(({ createDate, id, name }) => (
+        <Col key={id} {...colConf}>
+          <Card block hasBox={false} hasBorder style={{ width: '100%' }}>
             <Card.Body>
               <Box
                 block={true}
                 autoEllipsis={true}
                 center={
-                  <span className="text bold color-blue">
-                    <h4>四川省国家保密局{index}</h4>
-                  </span>
-                }
-                right={
-                  <Dropdown
-                    position="bottomRight"
-                    title={
-                      <Button inverted color="brown" circle hasBox={false}>
-                        <IconList />
-                      </Button>
-                    }>
-                    <Dropdown.Menu>
-                      <Dropdown.Item id="item2">详情</Dropdown.Item>
-                      <Dropdown.Item id="item3">修改</Dropdown.Item>
-                      <Dropdown.Item id="item1">删除</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                  <Link to={`/books/articles/${id}`}>
+                    <h5>{name}</h5>
+                  </Link>
                 }
               />
               <Space>
@@ -59,10 +44,8 @@ const CardList = () => {
                   <IconFillStar />
                   <IconFillStar />
                 </span>
-                <h5 className="text comment"> 四川省/成都 </h5>
+                <h5 className="text comment">{createDate} </h5>
               </Space>
-              <p>类别：经营类</p>
-              <p>行业：党政机关机要</p>
             </Card.Body>
           </Card>
         </Col>
@@ -149,7 +132,7 @@ export default function ArticleList() {
             <Space>
               <Dropdown
                 activeBy="hover"
-                position="bottomRight"
+                position="right"
                 title={
                   <Tooltip body="切换视图">
                     <span style={{ color: '#dd740a', cursor: 'pointer', fontSize: '1.5rem' }}>
@@ -180,29 +163,27 @@ export default function ArticleList() {
             <Col></Col>
           </Row>
           {type === 'table' && (
-            <>
-              <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
-              <div className="c-pagination-row">
-                <Pagination
-                  hasPageRange
-                  pageCount={pageInfo?.totalPage}
-                  page={pageInfo?.page}
-                  pageRanges={[10, 20, 50, 100]}
-                  pageRange={pageSize}
-                  onChangeRange={changePageSize}
-                  siblingCount={2}
-                  leftItems={[`共${pageInfo?.totalPage}页， ${pageInfo?.totalRecords}条记录`]}
-                  onChange={goTo}
-                />
-              </div>
-            </>
+            <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
           )}
 
           {type === 'card' && (
             <Row gutter={{ x: 16, y: 16 }}>
-              <CardList />
+              <CardList list={pageInfo?.payload ?? ([] as Article[])} />
             </Row>
           )}
+          <div className="c-pagination-row">
+            <Pagination
+              hasPageRange
+              pageCount={pageInfo?.totalPage}
+              page={pageInfo?.page}
+              pageRanges={[10, 20, 50, 100]}
+              pageRange={pageSize}
+              onChangeRange={changePageSize}
+              siblingCount={2}
+              leftItems={[`共${pageInfo?.totalPage}页， ${pageInfo?.totalRecords}条记录`]}
+              onChange={goTo}
+            />
+          </div>
         </Card.Body>
       </Card>
     </div>

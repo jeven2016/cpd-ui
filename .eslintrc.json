@@ -49,7 +49,7 @@
     "react/static-property-placement": "warn",
     "prefer-destructuring": "warn",
     "react/forbid-prop-types": "warn",
-    "no-use-before-define": "warn",
+    "no-use-before-define": "off",
     "react/no-array-index-key": "warn",
     "consistent-return": "warn",
     "react/require-default-props": "warn",

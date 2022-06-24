@@ -20,8 +20,8 @@ import { Outlet } from 'react-router-dom';
 
 const collapseAttribute = {
   attr: 'marginLeft',
-  minValue: '0px',
-  maxValue: '240px'
+  minValue: '0px'
+  // maxValue: '240px'
 };
 
 function getMenu(collapse) {
@@ -49,19 +49,19 @@ export default function Home() {
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          <Layout.Slider
-            extraClassName="layout-slider"
-            minWidth="0px"
-            collapse={collapse}
-            style={{}}>
-            <div className="slider-title">
-              <Space>
-                <HomeIcon />
-                <span>My World</span>
-              </Space>
-            </div>
-            {getMenu(collapse)}
-          </Layout.Slider>
+          {/*<Layout.Slider*/}
+          {/*  extraClassName="layout-slider"*/}
+          {/*  minWidth="0px"*/}
+          {/*  collapse={collapse}*/}
+          {/*  style={{}}>*/}
+          {/*  <div className="slider-title">*/}
+          {/*    <Space>*/}
+          {/*      <HomeIcon />*/}
+          {/*      <span>My World</span>*/}
+          {/*    </Space>*/}
+          {/*  </div>*/}
+          {/*  {getMenu(collapse)}*/}
+          {/*</Layout.Slider>*/}
 
           <Layout
             collapseAttribute={collapseAttribute}
