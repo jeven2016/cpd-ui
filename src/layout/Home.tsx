@@ -68,7 +68,7 @@ export default function Home() {
             collapse={!collapse}
             style={{ overflowY: 'auto' }}>
             <Affix top={0} block={false}>
-              <Navbar hasBorder={false} extraClassName="navbar-header">
+              <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
                 <Navbar.Title>
                   <Button circle inverted color="gray">
                     <IconCollapse style={{ fontSize: '1.5rem' }} />
@@ -93,18 +93,21 @@ export default function Home() {
               </Navbar>
             </Affix>
             <Layout.Content extraClassName="c-layout-content">
-              <Card block hasBox={false} extraClassName="white-panel">
-                <Card.Header>
-                  <Breadcrumb style={{ marginBottom: '0' }}>
+              <div className="c-breadcrumb-line white-panel">
+                <div>
+                  <Breadcrumb>
                     <Breadcrumb.Item>
                       <IconHome />
                     </Breadcrumb.Item>
                     <Breadcrumb.Item>书库</Breadcrumb.Item>
                     <Breadcrumb.Item active>文章列表</Breadcrumb.Item>
                   </Breadcrumb>
-                </Card.Header>
-              </Card>
-              <Outlet />
+                  <h2>列表标题</h2>
+                </div>
+              </div>
+              <div className="c-content-inner">
+                <Outlet />
+              </div>
             </Layout.Content>
           </Layout>
         </Layout.Split>

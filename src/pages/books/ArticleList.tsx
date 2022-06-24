@@ -142,17 +142,10 @@ export default function ArticleList() {
   }, []);
 
   return (
-    <div className="content-area">
-      <Card block hasBox={false} style={{ overflow: 'hidden', alignSelf: 'flex-start' }}>
+    <div className="c-content-area">
+      <Card block hasBox={true} extraClassName="white-panel">
         <Card.Header>
           <div className="content-header">
-            {/*<Breadcrumb style={{ marginBottom: '0' }}>*/}
-            {/*  <Breadcrumb.Item>*/}
-            {/*    <IconHome />*/}
-            {/*  </Breadcrumb.Item>*/}
-            {/*  <Breadcrumb.Item>书库</Breadcrumb.Item>*/}
-            {/*  <Breadcrumb.Item active>文章列表</Breadcrumb.Item>*/}
-            {/*</Breadcrumb>*/}
             <Space>
               <Dropdown
                 activeBy="hover"
@@ -189,16 +182,19 @@ export default function ArticleList() {
           {type === 'table' && (
             <>
               <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
-              <Pagination
-                hasPageRange
-                pageCount={pageInfo?.totalPage}
-                page={pageInfo?.page}
-                pageRanges={[10, 20, 50, 100]}
-                pageRange={pageSize}
-                onChangeRange={changePageSize}
-                siblingCount={2}
-                onChange={goTo}
-              />
+              <div className="c-pagination-row">
+                <Pagination
+                  hasPageRange
+                  pageCount={pageInfo?.totalPage}
+                  page={pageInfo?.page}
+                  pageRanges={[10, 20, 50, 100]}
+                  pageRange={pageSize}
+                  onChangeRange={changePageSize}
+                  siblingCount={2}
+                  leftItems={[`共${pageInfo?.totalPage}页， ${pageInfo?.totalRecords}条记录`]}
+                  onChange={goTo}
+                />
+              </div>
             </>
           )}
 
