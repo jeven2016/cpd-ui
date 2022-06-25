@@ -27,13 +27,13 @@ const CardList = ({ list = [] }: CardListProps): JSX.Element => {
     <>
       {list.map(({ createDate, id, name }) => (
         <Col key={id} {...colConf}>
-          <Card block hasBox={false} hasBorder style={{ width: '100%' }}>
+          <Card block hasBox={false} hasBorder style={{ maxWidth: '350px' }}>
             <Card.Body>
               <Box
                 block={true}
                 autoEllipsis={true}
                 center={
-                  <Link to={`/books/articles/${id}`}>
+                  <Link to={`/books/articles/${id}`} target="_blank">
                     <h5>{name}</h5>
                   </Link>
                 }
@@ -72,7 +72,11 @@ const cells = [
     paramName: 'name',
     sortable: false,
     format: (text, row) => {
-      return <Link to={`/books/articles/${row.id}`}>{text}</Link>;
+      return (
+        <Link target="_blank" to={`/books/articles/${row.id}`}>
+          {text}
+        </Link>
+      );
     }
   },
   {
@@ -98,31 +102,59 @@ const colConf = {
 };
 
 export default function ArticleList() {
-  const [type, setType] = useState<string>('table');
+  const [type, setType] = useState<string>('card');
   const [pageInfo, set] = useState<PageInfo | null>(null);
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
+  const [searchValue, setSearchValue] = useState<string>('');
+
   const { id } = useParams();
 
   useEffect(() => {
-    axios
-      .get(`/api/v1/catalogs/${id}/articles?page=${page}&pageSize=${pageSize}`)
-      .then((res: AxiosResponse<PageInfo>) => {
+    console.log(page, searchValue);
+  });
+
+  const list = useCallback(
+    (url: string) => {
+      axios.get(url).then((res: AxiosResponse<PageInfo>) => {
         res.data?.payload?.forEach((data) => {
           data.key = data.id;
         });
         set(res.data);
       });
-  }, [page, pageSize]);
+    },
+    [id, page, pageSize]
+  );
+
+  const loadList = useCallback(() => {
+    if (searchValue.length == 0) {
+      list(`/api/v1/catalogs/${id}/articles?page=${page}&pageSize=${pageSize}`);
+    } else {
+      list(
+        `/api/v1/articles?search=${encodeURIComponent(
+          searchValue
+        )}&page=${page}&pageSize=${pageSize}`
+      );
+    }
+  }, [id, page, pageSize, searchValue]);
+
+  useEffect(() => {
+    loadList();
+  }, [id, page, pageSize]);
 
   const goTo = useCallback((page: number, limit: number, e: MouseEvent) => {
     setPageSize(limit);
     setPage(page);
   }, []);
 
-  const changePageSize = useCallback((pageSize: number, e: MouseEvent) => {
+  const changePageSize = useCallback((pageSize: number) => {
     setPageSize(pageSize);
   }, []);
+
+  const search = useCallback(() => {
+    setPage(1);
+    loadList();
+  }, [loadList]);
 
   return (
     <div className="c-content-area">
@@ -156,8 +188,10 @@ export default function ArticleList() {
           <Row style={{ marginBottom: '1.5rem' }}>
             <Col>
               <Space>
-                <Input />
-                <Button type="primary">搜索</Button>
+                <Input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+                <Button type="primary" onClick={search}>
+                  搜索
+                </Button>
               </Space>
             </Col>
             <Col></Col>
@@ -174,12 +208,13 @@ export default function ArticleList() {
           <div className="c-pagination-row">
             <Pagination
               hasPageRange
+              simple
               pageCount={pageInfo?.totalPage}
               page={pageInfo?.page}
               pageRanges={[10, 20, 50, 100]}
               pageRange={pageSize}
               onChangeRange={changePageSize}
-              siblingCount={2}
+              siblingCount={1}
               leftItems={[`共${pageInfo?.totalPage}页， ${pageInfo?.totalRecords}条记录`]}
               onChange={goTo}
             />
