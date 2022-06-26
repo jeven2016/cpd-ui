@@ -49,10 +49,7 @@ export default function Home() {
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          <Layout.Slider
-            extraClassName="layout-slider"
-            // collapse={collapse}
-            style={{}}>
+          <Layout.Slider extraClassName="layout-slider" collapse={collapse} style={{}}>
             <Affix top={0} block={false}>
               <div className="slider-title">
                 <Space>
@@ -60,13 +57,14 @@ export default function Home() {
                   <span>My World</span>
                 </Space>
               </div>
+              <Button onClick={() => setCollapse(!collapse)}>C</Button>
               {getMenu(collapse)}
             </Affix>
           </Layout.Slider>
 
           <Layout
             collapseAttribute={collapseAttribute}
-            // collapse={!collapse}
+            collapse={!collapse}
             style={{ overflowY: 'auto' }}>
             <Affix top={0} block={false}>
               <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
