@@ -49,23 +49,24 @@ export default function Home() {
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          {/*<Layout.Slider*/}
-          {/*  extraClassName="layout-slider"*/}
-          {/*  minWidth="0px"*/}
-          {/*  collapse={collapse}*/}
-          {/*  style={{}}>*/}
-          {/*  <div className="slider-title">*/}
-          {/*    <Space>*/}
-          {/*      <HomeIcon />*/}
-          {/*      <span>My World</span>*/}
-          {/*    </Space>*/}
-          {/*  </div>*/}
-          {/*  {getMenu(collapse)}*/}
-          {/*</Layout.Slider>*/}
+          <Layout.Slider
+            extraClassName="layout-slider"
+            // collapse={collapse}
+            style={{}}>
+            <Affix top={0} block={false}>
+              <div className="slider-title">
+                <Space>
+                  <HomeIcon />
+                  <span>My World</span>
+                </Space>
+              </div>
+              {getMenu(collapse)}
+            </Affix>
+          </Layout.Slider>
 
           <Layout
             collapseAttribute={collapseAttribute}
-            collapse={!collapse}
+            // collapse={!collapse}
             style={{ overflowY: 'auto' }}>
             <Affix top={0} block={false}>
               <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
