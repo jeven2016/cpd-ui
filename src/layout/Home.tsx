@@ -27,7 +27,7 @@ const collapseAttribute = {
 function getMenu(collapse) {
   return (
     <Menu
-      collapsable={collapse}
+      compact={collapse}
       defaultActiveItems={['item1']}
       hasBox={false}
       type="primary"
@@ -44,15 +44,12 @@ function getMenu(collapse) {
 
 export default function Home() {
   const [collapse, setCollapse] = useState<boolean>(false);
-
+  console.log('collapse=' + collapse);
   return (
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          <Layout.Slider
-            extraClassName="layout-slider"
-            // collapse={collapse}
-            style={{}}>
+          <Layout.Slider collapse={collapse} style={{}}>
             <Affix top={0} block={false}>
               <div className="slider-title">
                 <Space>
@@ -71,7 +68,7 @@ export default function Home() {
             <Affix top={0} block={false}>
               <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
                 <Navbar.Title>
-                  <Button circle inverted color="gray">
+                  <Button circle inverted color="gray" onClick={() => setCollapse(!collapse)}>
                     <IconCollapse style={{ fontSize: '1.5rem' }} />
                   </Button>
                 </Navbar.Title>
