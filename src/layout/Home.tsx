@@ -49,7 +49,7 @@ export default function Home() {
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          <Layout.Slider collapse={collapse} style={{}}>
+          <Layout.Slider collapse={collapse} autoHide={false} style={{}}>
             <Affix top={0} block={false}>
               <div className="slider-title">
                 <Space>
@@ -63,7 +63,7 @@ export default function Home() {
 
           <Layout
             collapseAttribute={collapseAttribute}
-            // collapse={!collapse}
+            collapse={!collapse}
             style={{ overflowY: 'auto' }}>
             <Affix top={0} block={false}>
               <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">

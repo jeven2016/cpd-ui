@@ -57,7 +57,7 @@ body {
       }
 
       .menu-item {
-        margin: 0 1.5rem;
+        margin: 0 0.75rem;
         border-radius: 0.25rem;
         color: rgba(255, 255, 255, 0.65);
         text-shadow: none;
@@ -89,7 +89,7 @@ body {
         align-items: center;
         font-size: 1.25rem;
         font-weight: 600;
-        line-height: $header-line-height;
+        height: $header-line-height;
       }
     }
   }
