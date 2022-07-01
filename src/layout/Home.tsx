@@ -2,14 +2,15 @@ import {
   Affix,
   Breadcrumb,
   Button,
-  Card,
   Dropdown,
   IconAccount,
   IconHome,
   Layout,
   Menu,
   Navbar,
-  Space
+  Responsive,
+  Space,
+  useMediaQuery
 } from 'react-windy-ui';
 import HomeIcon from '@/common/icons/HomeIcon';
 import React, { useState } from 'react';
@@ -44,23 +45,25 @@ function getMenu(collapse) {
 
 export default function Home() {
   const [collapse, setCollapse] = useState<boolean>(false);
+  const { matches: smallWindow } = useMediaQuery(Responsive.sm.max);
 
   return (
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          <Layout.Slider collapse={collapse} autoHide={false} style={{}}>
-            <Affix top={0} block={false}>
-              <div className="slider-title">
-                <Space>
-                  <HomeIcon />
-                  <span>My World</span>
-                </Space>
-              </div>
-              {getMenu(collapse)}
-            </Affix>
-          </Layout.Slider>
-
+          {!smallWindow && (
+            <Layout.Slider collapse={collapse} autoHide={false} style={{}}>
+              <Affix top={0} block={false}>
+                <div className="slider-title">
+                  <Space>
+                    <HomeIcon />
+                    {!collapse && <span style={{ whiteSpace: 'nowrap' }}>My World</span>}
+                  </Space>
+                </div>
+                {getMenu(collapse)}
+              </Affix>
+            </Layout.Slider>
+          )}
           <Layout
             collapseAttribute={collapseAttribute}
             collapse={!collapse}
