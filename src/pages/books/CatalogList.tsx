@@ -9,9 +9,14 @@ export default function CatalogList() {
 
   const list = catalogs?.payload?.List ?? [];
   useEffect(() => {
-    axios.get('/api/v1/catalogs').then((res: AxiosResponse<CatalogPaload>) => {
-      set(res.data);
-    });
+    axios
+      .get('/api/v1/catalogs')
+      .then((res: AxiosResponse<CatalogPaload>) => {
+        set(res.data);
+      })
+      .catch((e) => {
+        alert(e.message);
+      });
   }, []);
 
   const showArticles = useCallback((id: string) => {

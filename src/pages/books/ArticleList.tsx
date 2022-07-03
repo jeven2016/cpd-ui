@@ -6,13 +6,15 @@ import {
   Dropdown,
   Input,
   Pagination,
+  Responsive,
   Row,
   Space,
   Table,
-  Tooltip
+  Tooltip,
+  useMediaQuery
 } from 'react-windy-ui';
 import IconChangeView from '@/common/icons/IconChangeView';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IconFillStar from '@/common/icons/IconFillStar';
 import { Link, useParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
@@ -26,14 +28,14 @@ const CardList = ({ list = [] }: CardListProps): JSX.Element => {
     <>
       {list.map(({ createDate, id, name }) => (
         <Col key={id} {...colConf}>
-          <Card block hasBox={false} hasBorder style={{ maxWidth: '350px' }}>
+          <Card block hasBox={false} hasBorder>
             <Card.Body>
               <Box
                 block={true}
                 autoEllipsis={true}
                 center={
                   <Link to={`/books/articles/${id}`} target="_blank">
-                    <h5>{name}</h5>
+                    <h4>{name}</h4>
                   </Link>
                 }
               />
@@ -106,12 +108,13 @@ export default function ArticleList() {
   const [page, setPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [searchValue, setSearchValue] = useState<string>('');
+  const { matches: smallWindow } = useMediaQuery(Responsive.sm.max);
 
   const { id } = useParams();
 
   useEffect(() => {
-    console.log(page, searchValue);
-  });
+    smallWindow && type == 'table' && setType('card');
+  }, [smallWindow, type]);
 
   const list = useCallback(
     (url: string) => {
@@ -155,46 +158,52 @@ export default function ArticleList() {
     loadList();
   }, [loadList]);
 
+  const switchArea = useMemo<React.ReactElement>(
+    () => (
+      <Space>
+        <Dropdown
+          activeBy="hover"
+          position="leftBottom"
+          title={
+            <Tooltip body="切换视图">
+              <span style={{ color: '#dd740a', cursor: 'pointer', fontSize: '1.5rem' }}>
+                <IconChangeView />
+              </span>
+            </Tooltip>
+          }>
+          <Dropdown.Menu>
+            <Dropdown.Item id="item1" onClick={() => setType('card')}>
+              卡片排列
+            </Dropdown.Item>
+            <Dropdown.Item id="item2" onClick={() => setType('table')}>
+              列表排列
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Space>
+    ),
+    []
+  );
+
   return (
     <div className="c-content-area">
       <Card block hasBox={true} extraClassName="white-panel">
-        <Card.Header>
-          <div className="content-header">
-            <Space>
-              <Dropdown
-                activeBy="hover"
-                position="right"
-                title={
-                  <Tooltip body="切换视图">
-                    <span style={{ color: '#dd740a', cursor: 'pointer', fontSize: '1.5rem' }}>
-                      <IconChangeView />
-                    </span>
-                  </Tooltip>
-                }>
-                <Dropdown.Menu>
-                  <Dropdown.Item id="item1" onClick={() => setType('card')}>
-                    卡片排列
-                  </Dropdown.Item>
-                  <Dropdown.Item id="item2" onClick={() => setType('table')}>
-                    列表排列
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Space>
-          </div>
-        </Card.Header>
         <Card.Body>
-          <Row style={{ marginBottom: '1.5rem' }}>
-            <Col>
+          <Box
+            autoEllipsis
+            block
+            hasPadding={false}
+            alignRight="center"
+            left={
               <Space>
                 <Input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
                 <Button type="primary" onClick={search}>
                   搜索
                 </Button>
               </Space>
-            </Col>
-            <Col></Col>
-          </Row>
+            }
+            right={!smallWindow && switchArea}
+          />
           {type === 'table' && (
             <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
           )}
@@ -207,15 +216,18 @@ export default function ArticleList() {
           <div className="c-pagination-row">
             <Pagination
               hasPageRange
-              simple
-              pageCount={pageInfo?.totalPage}
-              page={pageInfo?.page}
+              simple={smallWindow}
+              pageCount={pageInfo?.totalPage || 0}
+              page={pageInfo?.page || 0}
               pageRanges={[10, 20, 50, 100]}
               pageRange={pageSize}
               onChangeRange={changePageSize}
               siblingCount={1}
-              leftItems={[`共${pageInfo?.totalPage}页， ${pageInfo?.totalRecords}条记录`]}
+              leftItems={[`共${pageInfo?.totalPage || 0}页， ${pageInfo?.totalRecords || 0}条记录`]}
               onChange={goTo}
+              selectProps={{
+                position: 'topRight'
+              }}
             />
           </div>
         </Card.Body>

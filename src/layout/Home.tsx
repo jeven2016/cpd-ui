@@ -45,13 +45,13 @@ function getMenu(collapse) {
 
 export default function Home() {
   const [collapse, setCollapse] = useState<boolean>(false);
-  const { matches: smallWindow } = useMediaQuery(Responsive.sm.max);
+  const { matches: mdWindow } = useMediaQuery(Responsive.md.max);
 
   return (
     <>
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          {!smallWindow && (
+          {!mdWindow && (
             <Layout.Slider collapse={collapse} autoHide={false} style={{}}>
               <Affix top={0} block={false}>
                 <div className="slider-title">
