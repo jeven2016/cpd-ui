@@ -10,8 +10,11 @@ import CustomerDetails from '@/pages/customer/CustomerDetails';
 import CatalogList from '@/pages/books/CatalogList';
 import ArticleList from '@/pages/books/ArticleList';
 import Article from '@/pages/books/Article';
+import { useTranslation } from 'react-i18next';
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <>
       <BrowserRouter>

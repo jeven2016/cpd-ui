@@ -30,7 +30,7 @@ export default function CatalogList() {
           {list.map((c: Catalog, index: number) => {
             return (
               <Col xs={12} sm={6} md={3} key={`col-${index}`}>
-                <Card autoScale block extraClassName="white-panel">
+                <Card rise block extraClassName="white-panel">
                   <Card.Header>
                     <h3>{c.name || 'City Name'}</h3>
                   </Card.Header>

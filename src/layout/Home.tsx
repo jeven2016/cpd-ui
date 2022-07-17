@@ -71,7 +71,7 @@ export default function Home() {
             <Affix top={0} block={false}>
               <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
                 <Navbar.Title>
-                  <Button circle inverted color="gray" onClick={() => setCollapse(!collapse)}>
+                  <Button circle inverted hasBox={false} onClick={() => setCollapse(!collapse)}>
                     <IconCollapse style={{ fontSize: '1.5rem' }} />
                   </Button>
                 </Navbar.Title>
