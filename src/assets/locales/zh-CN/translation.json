@@ -1,3 +1,22 @@
 {
-  "hello": "你好啊"
+  "hello": "你好啊",
+  "web.title": "My World",
+
+  "login.button": "SSO单点登录",
+  "global": {
+    "switch_list": "切换视图",
+    "search": {
+      "button": "搜索"
+    },
+    "card_type": {
+      "card": "卡片排列",
+      "list": "列表排列"
+    },
+    "pagination": {
+      "total": "共",
+      "pages": "页",
+      "records": "条记录"
+    }
+  },
+  "books": {}
 }
