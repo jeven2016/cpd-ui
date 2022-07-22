@@ -12,6 +12,7 @@ $normal-line-height: 3rem;
 $content-padding: 0.5rem 1rem;
 
 $white-background: #fff;
+$primary-color: #0ca0ff;
 
 body {
   font: 1rem/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
@@ -233,5 +234,19 @@ body {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.c-affix {
+  .affix-fixed {
+    background: $white-background;
+  }
+}
+
+.c-article-title {
+  &:hover,
+  &:focus {
+    color: $primary-color;
+    outline: none;
   }
 }

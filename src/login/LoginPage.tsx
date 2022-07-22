@@ -1,19 +1,11 @@
-import {
-  Button,
-  Col,
-  Form,
-  IconAccount,
-  IconLock,
-  Input,
-  Row,
-  Select,
-  Space
-} from 'react-windy-ui';
+import { Button, Col, Form, Row, Select, Space } from 'react-windy-ui';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@/common/icons/HomeIcon';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const form = Form.useForm({
     //Validation will trigger on the submit event and invalid inputs will attach onChange event listeners to re-validate them.
     //for more information, you can refer to : https://react-hook-form.com/api/useform
@@ -51,22 +43,22 @@ export default function LoginPage() {
               <div className="c-login-info">
                 <Space className="text color-green">
                   <HomeIcon />
-                  <span>My World</span>
+                  <span>{t('web.title')}</span>
                 </Space>
               </div>
               <Form extraClassName="login-form" form={form} onSubmit={onSubmit}>
-                <Form.Item
-                  label="选择组织"
-                  name="realm"
-                  // rules={{
-                  //   required: 'The realm is required'
-                  // }}
-                  justifyLabel="end">
-                  <Select block placeholder="请选择组织" defaultValue="zhongfu">
-                    <Select.Option value="zhongfu">中孚信息</Select.Option>
-                    <Select.Option value="master">master</Select.Option>
-                  </Select>
-                </Form.Item>
+                {/*<Form.Item*/}
+                {/*  label="选择组织"*/}
+                {/*  name="realm"*/}
+                {/*  // rules={{*/}
+                {/*  //   required: 'The realm is required'*/}
+                {/*  // }}*/}
+                {/*  justifyLabel="end">*/}
+                {/*  <Select block placeholder="请选择组织" defaultValue="zhongfu">*/}
+                {/*    <Select.Option value="zhongfu">中孚信息</Select.Option>*/}
+                {/*    <Select.Option value="master">master</Select.Option>*/}
+                {/*  </Select>*/}
+                {/*</Form.Item>*/}
 
                 <Form.Item direction="horizontal">
                   <Row>
@@ -76,10 +68,9 @@ export default function LoginPage() {
                         onClick={(e) => onSubmit(null, e)}
                         hasMinWidth
                         color="blue"
-                        // block
                         // onClick={() => navigate('/platform')}
                       >
-                        KeyCloak 单点登录
+                        {t('login.button')}
                       </Button>
                     </Col>
                   </Row>

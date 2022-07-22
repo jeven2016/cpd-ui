@@ -11,6 +11,7 @@ import {
   Space,
   Table,
   Tooltip,
+  Affix,
   useMediaQuery
 } from 'react-windy-ui';
 import IconChangeView from '@/common/icons/IconChangeView';
@@ -18,6 +19,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IconFillStar from '@/common/icons/IconFillStar';
 import { Link, useParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
+import { useTranslation } from 'react-i18next';
 
 interface CardListProps {
   list?: Article[];
@@ -29,25 +31,24 @@ const CardList = ({ list = [] }: CardListProps): JSX.Element => {
       {list.map(({ createDate, id, name }) => (
         <Col key={id} {...colConf}>
           <Card block hasBox={false} hasBorder>
-            <Card.Body>
-              <Box
-                block={true}
-                autoEllipsis={true}
-                center={
-                  <Link to={`/books/articles/${id}`} target="_blank">
-                    <h4>{name}</h4>
-                  </Link>
-                }
-              />
-              <Space>
-                <span>
-                  <IconFillStar />
-                  <IconFillStar />
-                  <IconFillStar />
-                </span>
-                <h5 className="text comment">{createDate} </h5>
-              </Space>
+            <Card.Body style={{ minHeight: '4rem' }}>
+              <Tooltip body={name}>
+                <Box
+                  hasPadding={false}
+                  justify="start"
+                  block={true}
+                  autoEllipsis={true}
+                  center={
+                    <Link to={`/books/articles/${id}`} className="c-article-title" target="_blank">
+                      <h4>{name}</h4>
+                    </Link>
+                  }
+                />
+              </Tooltip>
             </Card.Body>
+            <Card.Footer>
+              <h5 className="text comment">{createDate} </h5>
+            </Card.Footer>
           </Card>
         </Col>
       ))}
@@ -103,6 +104,7 @@ const colConf = {
 };
 
 export default function ArticleList() {
+  const { t } = useTranslation();
   const [type, setType] = useState<string>('card');
   const [pageInfo, set] = useState<PageInfo | null>(null);
   const [page, setPage] = useState<number>(1);
@@ -165,7 +167,7 @@ export default function ArticleList() {
           activeBy="hover"
           position="leftBottom"
           title={
-            <Tooltip body="切换视图">
+            <Tooltip body={t('global.switch_list')}>
               <span style={{ color: '#dd740a', cursor: 'pointer', fontSize: '1.5rem' }}>
                 <IconChangeView />
               </span>
@@ -173,16 +175,38 @@ export default function ArticleList() {
           }>
           <Dropdown.Menu>
             <Dropdown.Item id="item1" onClick={() => setType('card')}>
-              卡片排列
+              {t('global.card_type.card')}
             </Dropdown.Item>
             <Dropdown.Item id="item2" onClick={() => setType('table')}>
-              列表排列
+              {t('global.card_type.list')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Space>
     ),
     []
+  );
+
+  const pagination = (
+    <Pagination
+      hasPageRange
+      simple={smallWindow}
+      pageCount={pageInfo?.totalPage || 0}
+      page={pageInfo?.page || 0}
+      pageRanges={[10, 20, 50, 100]}
+      pageRange={pageSize}
+      onChangeRange={changePageSize}
+      siblingCount={1}
+      leftItems={[
+        `${t('global.pagination.total')}${pageInfo?.totalPage || 0}${t(
+          'global.pagination.pages'
+        )}， ${pageInfo?.totalRecords || 0}${t('global.pagination.records')}`
+      ]}
+      onChange={goTo}
+      selectProps={{
+        position: 'topRight'
+      }}
+    />
   );
 
   return (
@@ -198,7 +222,7 @@ export default function ArticleList() {
               <Space>
                 <Input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
                 <Button type="primary" onClick={search}>
-                  搜索
+                  {t('global.search.button')}
                 </Button>
               </Space>
             }
@@ -214,21 +238,13 @@ export default function ArticleList() {
             </Row>
           )}
           <div className="c-pagination-row">
-            <Pagination
-              hasPageRange
-              simple={smallWindow}
-              pageCount={pageInfo?.totalPage || 0}
-              page={pageInfo?.page || 0}
-              pageRanges={[10, 20, 50, 100]}
-              pageRange={pageSize}
-              onChangeRange={changePageSize}
-              siblingCount={1}
-              leftItems={[`共${pageInfo?.totalPage || 0}页， ${pageInfo?.totalRecords || 0}条记录`]}
-              onChange={goTo}
-              selectProps={{
-                position: 'topRight'
-              }}
-            />
+            {smallWindow ? (
+              <Affix bottom={0} extraClassName="c-affix">
+                {pagination}
+              </Affix>
+            ) : (
+              pagination
+            )}
           </div>
         </Card.Body>
       </Card>
