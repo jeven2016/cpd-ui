@@ -1,9 +1,12 @@
 import { Button, Col, Form, Row, Select, Space } from 'react-windy-ui';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HomeIcon from '@/common/icons/HomeIcon';
 import { useTranslation } from 'react-i18next';
+import { useKeycloak } from '@react-keycloak/web';
 
 export default function LoginPage() {
+  const { keycloak, initialized } = useKeycloak();
+  const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
   const form = Form.useForm({
@@ -14,16 +17,17 @@ export default function LoginPage() {
 
   //invoked while submit button is clicked
   const onSubmit = (data, e) => {
-    console.log('onSubmit', data, e);
+    keycloak.login();
+    // console.log('onSubmit', data, e);
     //then call the api to save the data
-
-    navigate('/books/catalogs');
+    // navigate('/books/catalogs');
     //......
     // console.log(data.realm);
     // window.location.href = 'http://127.0.0.1:9999/backend/auth/' + data.realm;
   };
 
   const { reset } = form;
+  keycloak.loadUserInfo().then((data) => console.log(data));
 
   return (
     <div className="c-container">
