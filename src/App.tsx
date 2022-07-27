@@ -11,72 +11,83 @@ import CatalogList from '@/pages/books/CatalogList';
 import ArticleList from '@/pages/books/ArticleList';
 import Article from '@/pages/books/Article';
 import { useTranslation } from 'react-i18next';
-import { ReactKeycloakProvider, useKeycloak } from '@react-keycloak/web';
-import keycloak from '@/common/components/KeyCloak';
-import { PathRouteProps } from 'react-router/lib/components';
+import { useKeycloak } from '@react-keycloak/web';
+import { Loader } from 'react-windy-ui';
+import { URI } from '@/common/Constants';
 
-interface SecuredRouteProps {
-  element?: React.ReactElement;
-  children?: React.ReactElement;
-}
-
+/**
+ * 保护对应的资源，如果没有登录就跳转至登录页面
+ */
 const Secured = ({ element: Element }): JSX.Element => {
   const { keycloak, initialized } = useKeycloak();
   const location = useLocation();
-  console.log('init Secured=' + initialized + ', secured=' + keycloak.authenticated);
 
-  if (initialized && keycloak.authenticated) {
-    console.log('authenticated');
+  if (keycloak?.authenticated) {
     return <Element />;
   }
-  const baseLogin = '/login';
-  const toUri = location?.pathname === '/' ? baseLogin : `${baseLogin}?refer=` + location.pathname;
+
+  const toUri =
+    location?.pathname === '/'
+      ? URI.loginPath
+      : `${URI.loginPath}?${URI.redirectFlag}` + location.pathname;
   return <Navigate replace to={toUri} />;
 };
 
+/**
+ * 保护根路径，如果没有登录就跳转之登录页面，否则到首页
+ */
 const SecuredRoot = (): JSX.Element => {
-  const { keycloak, initialized } = useKeycloak();
-  console.log('init root =' + initialized + ', secured=' + keycloak.authenticated);
+  const { keycloak } = useKeycloak();
 
-  if (initialized && keycloak.authenticated) {
-    return <Navigate replace to="/books" />;
+  if (keycloak.authenticated) {
+    return <Navigate replace to={URI.defaultHome} />;
   }
-  return <Navigate replace to="/login" />;
+  return <Navigate replace to={URI.loginPath} />;
 };
 
 function App() {
   const { t } = useTranslation();
+  const { initialized } = useKeycloak();
+
+  if (!initialized) {
+    return (
+      <Loader
+        type="primary"
+        global
+        size="small"
+        color="white"
+        hasDefaultWidth={false}
+        modalStyle={{ background: '#000' }}
+        direction="horizontal"
+        active={!initialized}
+        text={t('global.loading')}
+      />
+    );
+  }
 
   return (
     <>
-      <ReactKeycloakProvider
-        authClient={keycloak}
-        initOptions={{
-          onLoad: 'check-sso',
-          pkceMethod: 'S256'
-        }}>
-        <BrowserRouter>
-          <Routes>
-            <Route element={<Container />}>
-              <Route path="/" element={<SecuredRoot />} />
-              <Route path="/platform" element={<Secured element={Home} />}>
-                <Route path="customer" element={<CustomerHome />}>
-                  <Route path="no-customers" element={<NoCustomer />} />
-                  <Route path="new" element={<CustomerDetails />} />
-                  <Route path="list" element={<CustomerList />} />
-                </Route>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Container />}>
+            <Route path="/" element={<SecuredRoot />} />
+            <Route path="/platform" element={<Secured element={Home} />}>
+              <Route path="customer" element={<CustomerHome />}>
+                <Route path="no-customers" element={<NoCustomer />} />
+                <Route path="new" element={<CustomerDetails />} />
+                <Route path="list" element={<CustomerList />} />
               </Route>
-              <Route path="/books" element={<Secured element={Home} />}>
-                <Route path="catalogs" element={<CatalogList />} />
-                <Route path="catalogs/:id/articles" element={<ArticleList />} />
-                <Route path="articles/:id" element={<Article />} />
-              </Route>
-              <Route path="/login" element={<LoginPage />} />
             </Route>
-            <Route path="*" element={<div>404</div>} />
-          </Routes>
-        </BrowserRouter>
-      </ReactKeycloakProvider>
+            <Route path="/books" element={<Secured element={Home} />}>
+              <Route path="catalogs" element={<CatalogList />} />
+              <Route path="catalogs/:id/articles" element={<ArticleList />} />
+              <Route path="articles/:id" element={<Article />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+          </Route>
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

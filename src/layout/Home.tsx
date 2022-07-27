@@ -13,11 +13,12 @@ import {
   useMediaQuery
 } from 'react-windy-ui';
 import HomeIcon from '@/common/icons/HomeIcon';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import IconCustomerMgr from '@/common/icons/IconCustomerMgr';
 import IconSystem from '@/common/icons/IconSystem';
 import IconCollapse from '@/common/icons/IconCollapse';
 import { Outlet } from 'react-router-dom';
+import { useKeycloak } from '@react-keycloak/web';
 
 const collapseAttribute = {
   attr: 'marginLeft',
@@ -46,6 +47,13 @@ function getMenu(collapse) {
 export default function Home() {
   const [collapse, setCollapse] = useState<boolean>(false);
   const { matches: mdWindow } = useMediaQuery(Responsive.md.max);
+  const { keycloak } = useKeycloak();
+  const [username, setUsername] = useState('');
+  console.log(keycloak.userInfo);
+  const logout = useCallback(() => {
+    console.log(window.location);
+    keycloak.logout({ redirectUri: 'http://localhost:8088' });
+  }, []);
 
   return (
     <>
@@ -80,12 +88,19 @@ export default function Home() {
                     <Dropdown
                       position="bottomRight"
                       title={
-                        <Button circle color="blue" inverted hasBox={false} hasRipple={false}>
-                          <IconAccount />
+                        <Button
+                          color="blue"
+                          inverted
+                          hasBox={false}
+                          hasRipple={false}
+                          leftIcon={<IconAccount />}>
+                          jeven
                         </Button>
                       }>
                       <Dropdown.Menu>
-                        <Dropdown.Item id="item2">退出</Dropdown.Item>
+                        <Dropdown.Item id="item2" onClick={logout}>
+                          退出
+                        </Dropdown.Item>
                         <Dropdown.Item id="item3">个人设置</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

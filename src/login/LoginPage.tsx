@@ -1,11 +1,12 @@
 import { Button, Col, Form, Row, Select, Space } from 'react-windy-ui';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import HomeIcon from '@/common/icons/HomeIcon';
 import { useTranslation } from 'react-i18next';
 import { useKeycloak } from '@react-keycloak/web';
+import { URI } from '@/common/Constants';
 
 export default function LoginPage() {
-  const { keycloak, initialized } = useKeycloak();
+  const { keycloak } = useKeycloak();
   const location = useLocation();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -27,7 +28,14 @@ export default function LoginPage() {
   };
 
   const { reset } = form;
-  keycloak.loadUserInfo().then((data) => console.log(data));
+
+  if (keycloak.authenticated) {
+    const search = location.search || '';
+    if (search.includes('refer=')) {
+      return <Navigate to={search.split('refer=')[1]} />;
+    }
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="c-container">

@@ -1,9 +1,9 @@
-import Keycloak from 'keycloak-js';
+import Keycloak, { KeycloakConfig } from 'keycloak-js';
 
-const config = {
-  realm: process.env.KEYCLOAK_REALM ?? 'jeven',
-  url: 'http://localhost:8080/',
-  clientId: 'security-admin-console'
+const config: KeycloakConfig = {
+  realm: process.env.REACT_APP_KEYCLOAK_REALM ?? '',
+  url: process.env.REACT_APP_KEYCLOAK_URL ?? '',
+  clientId: process.env.REACT_APP_CLIENT_ID ?? ''
 };
 
 // Setup Keycloak instance as needed

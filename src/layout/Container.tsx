@@ -1,8 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import { Loader } from 'react-windy-ui';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Container() {
+  const { t } = useTranslation();
   const [active, setActive] = useState<boolean>(true);
   useEffect(() => {
     let time;
@@ -26,8 +28,7 @@ export default function Container() {
         modalStyle={{ background: '#000' }}
         direction="horizontal"
         active={active}
-        // onMaskClick={() => setActive(false)}
-        text="数据加载中"
+        text={t('global.page.loading')}
       />
       <Outlet />
     </>

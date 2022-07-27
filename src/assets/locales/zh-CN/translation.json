@@ -16,7 +16,9 @@
       "total": "共",
       "pages": "页",
       "records": "条记录"
-    }
+    },
+    "loading": "数据加载中, 请稍候。",
+    "page.loading": "页面加载中, 请稍候。"
   },
   "books": {}
 }
