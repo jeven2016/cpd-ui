@@ -13,12 +13,13 @@ import {
   useMediaQuery
 } from 'react-windy-ui';
 import HomeIcon from '@/common/icons/HomeIcon';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import IconCustomerMgr from '@/common/icons/IconCustomerMgr';
 import IconSystem from '@/common/icons/IconSystem';
 import IconCollapse from '@/common/icons/IconCollapse';
 import { Outlet } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web';
+import { useTranslation } from 'react-i18next';
 
 const collapseAttribute = {
   attr: 'marginLeft',
@@ -27,6 +28,8 @@ const collapseAttribute = {
 };
 
 function getMenu(collapse) {
+  const { t } = useTranslation();
+
   return (
     <Menu
       compact={collapse}
@@ -35,25 +38,27 @@ function getMenu(collapse) {
       type="primary"
       hasRipple={false}>
       <Menu.Item id="item1" icon={<IconCustomerMgr />}>
-        My Books
+        {t('web.title')}
       </Menu.Item>
       <Menu.Item id="item2" icon={<IconSystem />}>
-        系统配置
+        {t('web.system_config')}
       </Menu.Item>
     </Menu>
   );
 }
 
 export default function Home() {
+  const { t } = useTranslation();
   const [collapse, setCollapse] = useState<boolean>(false);
   const { matches: mdWindow } = useMediaQuery(Responsive.md.max);
   const { keycloak } = useKeycloak();
-  const [username, setUsername] = useState('');
-  console.log(keycloak.userInfo);
+
   const logout = useCallback(() => {
     console.log(window.location);
     keycloak.logout({ redirectUri: 'http://localhost:8088' });
   }, []);
+  console.log(keycloak?.tokenParsed);
+  const username = useMemo(() => keycloak?.tokenParsed?.preferred_username ?? '', [keycloak]);
 
   return (
     <>
@@ -65,7 +70,7 @@ export default function Home() {
                 <div className="slider-title">
                   <Space>
                     <HomeIcon />
-                    {!collapse && <span style={{ whiteSpace: 'nowrap' }}>My World</span>}
+                    {!collapse && <span style={{ whiteSpace: 'nowrap' }}>{t('web.title')}</span>}
                   </Space>
                 </div>
                 {getMenu(collapse)}
@@ -94,14 +99,14 @@ export default function Home() {
                           hasBox={false}
                           hasRipple={false}
                           leftIcon={<IconAccount />}>
-                          jeven
+                          {username}
                         </Button>
                       }>
                       <Dropdown.Menu>
                         <Dropdown.Item id="item2" onClick={logout}>
-                          退出
+                          {t('global.link.exit')}
                         </Dropdown.Item>
-                        <Dropdown.Item id="item3">个人设置</Dropdown.Item>
+                        <Dropdown.Item id="item3">{t('global.link.profile_setting')}</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </Navbar.Item>
