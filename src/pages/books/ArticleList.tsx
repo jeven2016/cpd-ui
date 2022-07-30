@@ -20,6 +20,7 @@ import IconFillStar from '@/common/icons/IconFillStar';
 import { Link, useParams } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
+import { get } from '@/client/Request';
 
 interface CardListProps {
   list?: Article[];
@@ -120,11 +121,11 @@ export default function ArticleList() {
 
   const list = useCallback(
     (url: string) => {
-      axios.get(url).then((res: AxiosResponse<PageInfo>) => {
-        res.data?.payload?.forEach((data) => {
+      get(url).then((data) => {
+        (data as PageInfo)?.payload?.forEach((data) => {
           data.key = data.id;
         });
-        set(res.data);
+        set(data as PageInfo);
       });
     },
     [id, page, pageSize]

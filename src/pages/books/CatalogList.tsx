@@ -2,6 +2,7 @@ import { Button, Card, Col, Divider, Row } from 'react-windy-ui';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import { get } from '@/client/Request';
 
 export default function CatalogList() {
   const navigate = useNavigate();
@@ -9,10 +10,9 @@ export default function CatalogList() {
 
   const list = catalogs?.payload?.List ?? [];
   useEffect(() => {
-    axios
-      .get('/api/v1/catalogs')
-      .then((res: AxiosResponse<CatalogPaload>) => {
-        set(res.data);
+    get('/api/v1/catalogs')
+      .then((data) => {
+        set(data as CatalogPaload);
       })
       .catch((e) => {
         alert(e.message);

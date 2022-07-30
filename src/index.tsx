@@ -13,8 +13,8 @@ const eventLogger = (event: unknown, error: unknown) => {
   // console.log('onKeycloakEvent', event, error);
 };
 
-const tokenLogger = (tokens: unknown) => {
-  console.log('onKeycloakTokens', tokens);
+const tokenLogger = (tokens: Tokens) => {
+  tokens.token && localStorage.setItem('accessToken', tokens.token);
 };
 
 ReactDOM.render(

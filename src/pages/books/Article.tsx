@@ -1,15 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import { Divider } from 'react-windy-ui';
+import { get } from '@/client/Request';
 
 export default function Article() {
   const { id } = useParams();
   const [article, set] = useState<Article | null>(null);
 
   useEffect(() => {
-    axios.get(`/api/v1/articles/${id}`).then((res: AxiosResponse<Article>) => {
-      set(res.data);
+    get(`/api/v1/articles/${id}`).then((data) => {
+      set(data as Article);
     });
   }, [id]);
 
