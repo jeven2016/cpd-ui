@@ -14,7 +14,7 @@ axios.interceptors.request.use(
       'Content-Type': 'application/json'
     };
     if (accessToken) {
-      header['Authorization'] = 'bear ' + accessToken;
+      header['Authorization'] = 'Bearer ' + accessToken;
     }
 
     config.headers = header;

@@ -14,6 +14,7 @@ const eventLogger = (event: unknown, error: unknown) => {
 };
 
 const tokenLogger = (tokens: Tokens) => {
+  console.log('accessToken:', tokens);
   tokens.token && localStorage.setItem('accessToken', tokens.token);
 };
 
