@@ -13,13 +13,14 @@ import {
   useMediaQuery
 } from 'react-windy-ui';
 import HomeIcon from '@/common/icons/HomeIcon';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import IconCustomerMgr from '@/common/icons/IconCustomerMgr';
 import IconSystem from '@/common/icons/IconSystem';
 import IconCollapse from '@/common/icons/IconCollapse';
 import { Outlet } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web';
 import { useTranslation } from 'react-i18next';
+import { EnvConfig } from '@/common/config/EnvConfig';
 
 const collapseAttribute = {
   attr: 'marginLeft',
@@ -27,9 +28,7 @@ const collapseAttribute = {
   // maxValue: '240px'
 };
 
-function getMenu(collapse) {
-  const { t } = useTranslation();
-
+function getMenu(collapse, t) {
   return (
     <Menu
       compact={collapse}
@@ -54,9 +53,8 @@ export default function Home() {
   const { keycloak } = useKeycloak();
 
   const logout = useCallback(() => {
-    console.log(window.location);
-    keycloak.logout({ redirectUri: 'http://localhost:8088' });
-  }, []);
+    keycloak.logout({ redirectUri: EnvConfig.redirectUri }).catch((e) => console.error(e));
+  }, [keycloak]);
   console.log(keycloak?.tokenParsed);
   const username = useMemo(() => keycloak?.tokenParsed?.preferred_username ?? '', [keycloak]);
 
@@ -73,7 +71,7 @@ export default function Home() {
                     {!collapse && <span style={{ whiteSpace: 'nowrap' }}>{t('web.title')}</span>}
                   </Space>
                 </div>
-                {getMenu(collapse)}
+                {getMenu(collapse, t)}
               </Affix>
             </Layout.Slider>
           )}
