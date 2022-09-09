@@ -33,6 +33,10 @@ axios.interceptors.response.use(
     if (response.data.errCode === 2) {
       console.log('过期');
     }
+    if (response.status == 401) {
+      alert('401');
+      return;
+    }
     return response;
   },
   (error) => {

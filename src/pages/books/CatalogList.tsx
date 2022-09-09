@@ -15,7 +15,8 @@ export default function CatalogList() {
         set(data as CatalogPaload);
       })
       .catch((e) => {
-        alert(e.message);
+        console.error(e);
+        // alert(e.message);
       });
   }, []);
 

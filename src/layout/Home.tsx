@@ -55,7 +55,7 @@ export default function Home() {
   const logout = useCallback(() => {
     keycloak.logout({ redirectUri: EnvConfig.redirectUri }).catch((e) => console.error(e));
   }, [keycloak]);
-  console.log(keycloak?.tokenParsed);
+
   const username = useMemo(() => keycloak?.tokenParsed?.preferred_username ?? '', [keycloak]);
 
   return (
@@ -76,9 +76,11 @@ export default function Home() {
             </Layout.Slider>
           )}
           <Layout
+            extraClassName="c-layout-inner"
             collapseAttribute={collapseAttribute}
             collapse={!collapse}
             style={{ overflowY: 'auto' }}>
+            <div className="c-home"></div>
             <Affix top={0} block={false}>
               <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
                 <Navbar.Title>
