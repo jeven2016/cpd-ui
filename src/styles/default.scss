@@ -117,21 +117,22 @@ body {
 .c-container {
   position: relative;
   background-size: cover;
-  background: linear-gradient(121deg, #ad00ff 0%, #0c0056 100%),
-    linear-gradient(121deg, #fa00ff 0%, rgba(0, 255, 71, 0) 100%),
-    linear-gradient(127deg, #00f0ff 0%, #a80000 100%),
-    radial-gradient(107% 142% at 15% 104%, #f3d0fc 0%, #1700a4 100%),
-    radial-gradient(100% 100% at 50% 0%, #7300a9 0%, #00ffe0 100%),
-    radial-gradient(100% 100% at 50% 0%, #7300a9 0%, #00ffe0 100%),
-    linear-gradient(127deg, #b7d500 0%, #2200aa 100%);
-  background-blend-mode: overlay, color, overlay, difference, color-dodge, difference, normal;
+  //background: linear-gradient(121deg, #ad00ff 0%, #0c0056 100%),
+  //  linear-gradient(121deg, #fa00ff 0%, rgba(0, 255, 71, 0) 100%),
+  //  linear-gradient(127deg, #00f0ff 0%, #a80000 100%),
+  //  radial-gradient(107% 142% at 15% 104%, #f3d0fc 0%, #1700a4 100%),
+  //  radial-gradient(100% 100% at 50% 0%, #7300a9 0%, #00ffe0 100%),
+  //  radial-gradient(100% 100% at 50% 0%, #7300a9 0%, #00ffe0 100%),
+  //  linear-gradient(127deg, #b7d500 0%, #2200aa 100%);
+  //background-blend-mode: overlay, color, overlay, difference, color-dodge, difference, normal;
+  background: url('../assets/desktop.jpg');
 }
 
 .c-login-container {
   height: 100vh;
 
   > .c-back {
-    background: rgba(0, 0, 200, 0.13);
+    background: rgba(0, 0, 200, 0.13); //图片颜色遮罩
     position: relative;
     z-index: 1;
     height: 100%;
@@ -154,7 +155,7 @@ body {
       flex-direction: column;
       //align-items: center;
       height: 100%;
-      background: $default_background;
+      background: rgba(255, 255, 255, 1);
       box-shadow: $default-box-shadow;
 
       .input {

@@ -45,17 +45,21 @@ export default function LoginPage() {
           <Row>
             <Col
               extraClassName="c-login-col"
-              mdOffset={4}
-              lgOffset={7}
-              xlOffset={8}
-              sm={12}
               md={8}
               lg={5}
-              xl={4}>
+              xl={4}
+              // mdOffset={4}
+              // lgOffset={7}
+              // xlOffset={8}
+              // sm={12}
+              // md={8}
+              // lg={5}
+              // xl={4}
+            >
               <div className="c-login-info">
                 <Space className="text color-green">
                   <HomeIcon />
-                  <span>{t('web.title')}</span>
+                  <span>{t('web.details')}</span>
                 </Space>
               </div>
               <Form extraClassName="login-form" form={form} onSubmit={onSubmit}>

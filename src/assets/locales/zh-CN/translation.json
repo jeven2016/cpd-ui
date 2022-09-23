@@ -1,7 +1,8 @@
 {
   "hello": "你好啊",
   "web": {
-    "title": "My World",
+    "title": "系统管理平台",
+    "details": "欢迎登录系统管理平台",
     "system_config": "系统配置"
   },
   "login.button": "SSO单点登录",
