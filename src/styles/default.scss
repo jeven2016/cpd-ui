@@ -17,86 +17,13 @@ $primary-color: #0ca0ff;
 body {
   font: 1rem/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial,
     Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  background: #f7f9fc;
+  background: rgb(240, 242, 245);
   //color: #6c757d;
 }
 
 #root {
   height: 100vh;
   width: 100%;
-
-  .base-layout {
-    height: 100%;
-    background: transparent;
-
-    .navbar {
-      border-radius: 0;
-      background: $white-background;
-    }
-  }
-
-  .layout-split {
-    //height: calc(100vh - 4rem);
-
-    .layout-slider {
-      color: #fff;
-      background: #2d6bcf;
-      //position: fixed;
-      height: 100%;
-      overflow-y: auto;
-      //left: 0;
-      //top: 0;
-      background: $default_background;
-      box-shadow: $default-box-shadow;
-
-      > .slider-inner {
-        &::before {
-          content: '';
-          width: 100%;
-          height: 100%;
-          //left: 0;
-          //top: 0;
-          background: rgba(0, 0, 0, 1);
-        }
-      }
-
-      .menu-item {
-        margin: 0 0.75rem;
-        border-radius: 0.25rem;
-        color: rgba(255, 255, 255, 0.65);
-        text-shadow: none;
-
-        &::after {
-          display: none;
-        }
-
-        &:hover {
-          color: #fff;
-        }
-
-        &.active {
-          //background: #fff;
-          background: #dd740a;
-          color: #fff;
-          box-shadow: $default-box-shadow;
-        }
-
-        + .menu-item {
-          margin-top: 0.5rem;
-        }
-      }
-
-      .slider-title {
-        display: flex;
-        flex: 1 1 auto;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.25rem;
-        font-weight: 600;
-        height: $header-line-height;
-      }
-    }
-  }
 
   .customer-panel {
     + .card {
@@ -190,7 +117,7 @@ body {
 }
 
 .c-navbar-header {
-  line-height: $normal-line-height;
+  line-height: $header-line-height;
   border-bottom: 1px solid #ccc;
 }
 
@@ -211,19 +138,12 @@ body {
 }
 
 .c-content-area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem 1rem;
+  display: block;
+  margin-top: 1rem;
 
   > .content-info {
     width: 60%;
   }
-}
-
-.c-layout-content {
-  //padding: 1rem;
-  background: transparent;
 }
 
 .c-content-inner {
@@ -258,5 +178,128 @@ body {
   &:focus {
     color: $primary-color;
     outline: none;
+  }
+}
+
+.c-slider {
+  color: #fff;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  left: 0;
+  top: 0;
+  padding: 1rem;
+  width: 250px;
+  z-index: 100;
+
+  > .c-slider-content {
+    height: 100%;
+    background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+    box-shadow: rgb(0 0 0 / 5%) 0 1.25rem 1.6875rem 0;
+    border-radius: 0.75rem;
+
+    .menu-item {
+      font-size: 1rem;
+      font-weight: 400;
+      margin: 1rem 1rem 0;
+      border-radius: 0.25rem;
+      color: #fff;
+      text-shadow: none;
+      padding: 1.5rem 1rem;
+      transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+        background-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+
+      &::after {
+        display: none !important;
+      }
+
+      &:hover {
+        color: #fff;
+      }
+
+      &.active {
+        background: linear-gradient(195deg, rgb(73, 163, 241), rgb(26, 115, 232));
+        color: #fff;
+        box-shadow: rgb(0 0 0 / 10%) 0 0.25rem 0.375rem -0.0625rem,
+          rgb(0 0 0 / 6%) 0rem 0.125rem 0.25rem -0.0625rem;
+      }
+
+      + .menu-item {
+        margin-top: 0.5rem;
+      }
+    }
+
+    .slider-title {
+      padding: 1.5rem 0 0;
+      display: flex;
+      flex: 1 1 auto;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 600;
+      height: $header-line-height;
+    }
+  }
+}
+
+.base-layout {
+  margin: 1rem 1rem 1rem 250px;
+  height: 100%;
+  background: transparent;
+
+  .navbar {
+    border-radius: 0;
+    background: $white-background;
+  }
+}
+
+.c-content-header {
+  //background: linear-gradient(195deg, rgba(73, 163, 241, 0.6), rgba(26, 115, 232, 0.6)) 60%  center / cover, url("../assets/wm1.jpg") transparent;
+  background: linear-gradient(195deg, rgba(73, 163, 241, 0.3), rgba(40, 119, 224, 0.6)) 60% center /
+      cover,
+    url('../assets/wm1.jpg') center 45% no-repeat;
+  background-size: cover;
+  height: 18rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  overflow: hidden;
+
+  .c-header-panel {
+    color: #ffffff;
+    font-size: 2rem;
+    padding: 1.5rem;
+
+    > .c-header-desc {
+      font-size: 1.25rem;
+      margin: 1rem 1rem 0;
+    }
+  }
+}
+
+.layout,
+.layout-content {
+  background: transparent;
+}
+
+.c-content-body {
+  display: flex;
+  overflow: visible;
+  position: relative;
+  margin: -4rem 1.5rem 1rem;
+  min-height: 200px;
+  background: #fff;
+  box-shadow: $default-box-shadow;
+  border-radius: 1rem;
+  padding: 1rem;
+
+  .c-book-chanel {
+    color: rgba(245, 128, 62);
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .c-book-chanel-list {
+    margin-top: 1rem;
   }
 }

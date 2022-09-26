@@ -43,19 +43,7 @@ export default function LoginPage() {
         <div className="c-back" />
         <div className="c-login-row">
           <Row>
-            <Col
-              extraClassName="c-login-col"
-              md={8}
-              lg={5}
-              xl={4}
-              // mdOffset={4}
-              // lgOffset={7}
-              // xlOffset={8}
-              // sm={12}
-              // md={8}
-              // lg={5}
-              // xl={4}
-            >
+            <Col extraClassName="c-login-col" md={8} lg={5} xl={4}>
               <div className="c-login-info">
                 <Space className="text color-green">
                   <HomeIcon />

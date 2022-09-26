@@ -35,12 +35,12 @@ function getMenu(collapse, t) {
       defaultActiveItems={['item1']}
       hasBox={false}
       type="primary"
-      hasRipple={false}>
+      hasRipple={true}>
       <Menu.Item id="item1" icon={<IconCustomerMgr />}>
-        {t('web.title')}
+        {t('menu.books')}
       </Menu.Item>
       <Menu.Item id="item2" icon={<IconSystem />}>
-        {t('web.system_config')}
+        {t('menu.system_config')}
       </Menu.Item>
     </Menu>
   );
@@ -57,78 +57,67 @@ export default function Home() {
   }, [keycloak]);
 
   const username = useMemo(() => keycloak?.tokenParsed?.preferred_username ?? '', [keycloak]);
+  const [affixed, setAffixed] = useState<boolean>(false);
 
   return (
     <>
+      {!mdWindow && (
+        <div className="c-slider">
+          <div className="c-slider-content">
+            <div className="slider-title">
+              <Space>
+                <HomeIcon />
+                {!collapse && <span style={{ whiteSpace: 'nowrap' }}>{t('web.title')}</span>}
+              </Space>
+            </div>
+            {getMenu(collapse, t)}
+          </div>
+        </div>
+      )}
       <Layout extraClassName="base-layout">
         <Layout.Split>
-          {!mdWindow && (
-            <Layout.Slider collapse={collapse} autoHide={false} style={{}}>
-              <Affix top={0} block={false}>
-                <div className="slider-title">
-                  <Space>
-                    <HomeIcon />
-                    {!collapse && <span style={{ whiteSpace: 'nowrap' }}>{t('web.title')}</span>}
-                  </Space>
-                </div>
-                {getMenu(collapse, t)}
-              </Affix>
-            </Layout.Slider>
-          )}
           <Layout
             extraClassName="c-layout-inner"
             collapseAttribute={collapseAttribute}
             collapse={!collapse}
             style={{ overflowY: 'auto' }}>
             <div className="c-home"></div>
-            <Affix top={0} block={false}>
-              <Navbar hasBorder={false} hasBox={false} extraClassName="c-navbar-header">
-                <Navbar.Title>
-                  <Button circle inverted hasBox={false} onClick={() => setCollapse(!collapse)}>
-                    <IconCollapse style={{ fontSize: '1.5rem' }} />
-                  </Button>
-                </Navbar.Title>
-                <Navbar.List justify="end">
-                  <Navbar.Item>
-                    <Dropdown
-                      position="bottomRight"
-                      title={
-                        <Button
-                          color="blue"
-                          inverted
-                          hasBox={false}
-                          hasRipple={false}
-                          leftIcon={<IconAccount />}>
-                          {username}
-                        </Button>
-                      }>
-                      <Dropdown.Menu>
-                        <Dropdown.Item id="item2" onClick={logout}>
-                          {t('global.link.exit')}
-                        </Dropdown.Item>
-                        <Dropdown.Item id="item3">{t('global.link.profile_setting')}</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </Navbar.Item>
-                </Navbar.List>
-              </Navbar>
-            </Affix>
             <Layout.Content extraClassName="c-layout-content">
-              <div className="c-breadcrumb-line white-panel">
-                <div>
-                  <Breadcrumb>
-                    <Breadcrumb.Item>
-                      <IconHome />
-                    </Breadcrumb.Item>
-                    <Breadcrumb.Item>书库</Breadcrumb.Item>
-                    <Breadcrumb.Item active>文章列表</Breadcrumb.Item>
-                  </Breadcrumb>
-                  <h2>列表标题</h2>
-                </div>
-              </div>
-              <div className="c-content-inner">
-                <Outlet />
-              </div>
+              <Affix top={16} block={false} onChange={(status) => setAffixed(status)}>
+                <Navbar hasBorder={false} hasBox={affixed} extraClassName="c-navbar-header">
+                  <Navbar.Title>
+                    <Button circle inverted hasBox={false} onClick={() => setCollapse(!collapse)}>
+                      <IconCollapse style={{ fontSize: '1.5rem' }} />
+                    </Button>
+                  </Navbar.Title>
+                  <Navbar.List justify="end">
+                    <Navbar.Item>
+                      <Dropdown
+                        position="bottomRight"
+                        title={
+                          <Button
+                            color="blue"
+                            inverted
+                            hasBox={false}
+                            hasRipple={false}
+                            leftIcon={<IconAccount />}>
+                            {username}
+                          </Button>
+                        }>
+                        <Dropdown.Menu>
+                          <Dropdown.Item id="item2" onClick={logout}>
+                            {t('global.link.exit')}
+                          </Dropdown.Item>
+                          <Dropdown.Item id="item3">
+                            {t('global.link.profile_setting')}
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </Navbar.Item>
+                  </Navbar.List>
+                </Navbar>
+              </Affix>
+              <Outlet />
             </Layout.Content>
           </Layout>
         </Layout.Split>

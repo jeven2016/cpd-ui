@@ -1,8 +1,11 @@
 {
   "hello": "你好啊",
   "web": {
-    "title": "系统管理平台",
-    "details": "欢迎登录系统管理平台",
+    "title": "统一平台",
+    "details": "欢迎登录统一平台"
+  },
+  "menu": {
+    "books": "书库世界",
     "system_config": "系统配置"
   },
   "login.button": "SSO单点登录",
