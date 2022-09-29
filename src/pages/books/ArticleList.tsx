@@ -1,4 +1,5 @@
 import {
+  Affix,
   Box,
   Button,
   Card,
@@ -11,14 +12,11 @@ import {
   Space,
   Table,
   Tooltip,
-  Affix,
   useMediaQuery
 } from 'react-windy-ui';
 import IconChangeView from '@/common/icons/IconChangeView';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import IconFillStar from '@/common/icons/IconFillStar';
 import { Link, useParams } from 'react-router-dom';
-import axios, { AxiosResponse } from 'axios';
 import { useTranslation } from 'react-i18next';
 import { get } from '@/client/Request';
 
@@ -211,44 +209,61 @@ export default function ArticleList() {
   );
 
   return (
-    <div className="c-content-area">
-      <Card block hasBox={true} extraClassName="white-panel">
-        <Card.Body>
-          <Box
-            autoEllipsis
-            block
-            hasPadding={false}
-            alignRight="center"
-            left={
-              <Space>
-                <Input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
-                <Button type="primary" onClick={search}>
-                  {t('global.search.button')}
-                </Button>
-              </Space>
-            }
-            right={!smallWindow && switchArea}
-          />
-          {type === 'table' && (
-            <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
-          )}
-
-          {type === 'card' && (
-            <Row gutter={{ x: 16, y: 16 }}>
-              <CardList list={pageInfo?.payload ?? ([] as Article[])} />
-            </Row>
-          )}
-          <div className="c-pagination-row">
-            {smallWindow ? (
-              <Affix bottom={0} extraClassName="c-affix">
-                {pagination}
-              </Affix>
-            ) : (
-              pagination
+    <>
+      <div className="c-content-area">
+        <Card block extraClassName="white-panel">
+          <Card.Header>
+            <Box
+              left={<div className="c-catalog-flag">A</div>}
+              center={
+                <div className="c-catalog-name ellipsis">
+                  <a href="#">测试测试</a>
+                </div>
+              }
+              right={<div></div>}
+            />
+          </Card.Header>
+        </Card>
+      </div>
+      <div className="c-content-area">
+        <Card block hasBox={true} extraClassName="white-panel">
+          <Card.Body>
+            <Box
+              autoEllipsis
+              block
+              hasPadding={false}
+              alignRight="center"
+              left={
+                <Space>
+                  <Input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+                  <Button type="primary" onClick={search}>
+                    {t('global.search.button')}
+                  </Button>
+                </Space>
+              }
+              right={!smallWindow && switchArea}
+            />
+            {type === 'table' && (
+              <Table loadData={pageInfo?.payload} cells={cells} hover={true} type="striped" />
             )}
-          </div>
-        </Card.Body>
-      </Card>
-    </div>
+
+            {type === 'card' && (
+              <Row gutter={{ x: 16, y: 16 }}>
+                <CardList list={pageInfo?.payload ?? ([] as Article[])} />
+              </Row>
+            )}
+            <div className="c-pagination-row">
+              {smallWindow ? (
+                <Affix bottom={0} extraClassName="c-affix">
+                  {pagination}
+                </Affix>
+              ) : (
+                pagination
+              )}
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
+    </>
   );
 }

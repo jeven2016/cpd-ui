@@ -1,35 +1,22 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Col,
-  Divider,
-  IconList,
-  Row,
-  Tabs,
-  Typography
-} from 'react-windy-ui';
+import { Avatar, Box, Button, Card, Col, IconList, Row, Tabs, Typography } from 'react-windy-ui';
 import { useNavigate } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import { get } from '@/client/Request';
-import pic from '@/assets/bg.jpg';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 export default function CatalogList() {
   const navigate = useNavigate();
-  const [catalogs, set] = useState<CatalogPaload | null>(null);
+  const [catalogResponse, set] = useState<CatalogPaload>({ list: [] });
+  const [selectedTabId, setSelectedTabId] = useState<string | undefined>(
+    catalogResponse.list[0]?.id
+  );
 
-  const list = catalogs?.payload?.List ?? [];
+  const { list } = catalogResponse;
+
   useEffect(() => {
-    get('/api/v1/catalogs')
-      .then((data) => {
-        set(data as CatalogPaload);
-      })
-      .catch((e) => {
-        console.error(e);
-        // alert(e.message);
-      });
+    get('/api/v1/catalogs').then((data) => {
+      set(data as CatalogPaload);
+    });
   }, []);
 
   const showArticles = useCallback((id: string) => {
@@ -51,64 +38,102 @@ export default function CatalogList() {
           <Col md={12}>
             <Box
               left={
-                <Avatar hasBox={false} extraClassName="bg-color-primary" size="medium">
+                <Avatar hasBox={false} extraClassName="c-list-avatar" size="medium">
                   <IconList />
                 </Avatar>
               }
               right={<span className="c-book-chanel"> 书库列表</span>}
             />
+          </Col>
+
+          <Col col={12}>
             <div className="c-book-chanel-list">
-              <Tabs onChange={(item) => console.log(item)}>
+              <Tabs onChange={(itemVal) => setSelectedTabId(itemVal)} active={selectedTabId}>
                 <Tabs.Items>
-                  <Tabs.TabItem value="Item1">Item1</Tabs.TabItem>
-                </Tabs.Items>
-                <Tabs.Items>
-                  <Tabs.TabItem value="Item2">Item1</Tabs.TabItem>
+                  {catalogResponse.list.map((item) => {
+                    return (
+                      <Tabs.TabItem key={item.id} value={item.id}>
+                        {item.name ?? 'Name'}
+                      </Tabs.TabItem>
+                    );
+                  })}
                 </Tabs.Items>
                 <Tabs.Panels>
-                  <Tabs.TabPanel itemValue="Item1">
-                    <Row gutter={{ x: 16, y: 16 }}>
-                      {list.map((c: Catalog, index: number) => {
-                        return (
-                          <Col col={3} key={`col-${index}`}>
-                            <Card rise block extraClassName="white-panel">
-                              <Card.Header>
-                                <h3>{c.name || 'City Name'}</h3>
-                              </Card.Header>
-                              <Divider />
-                              <Card.Body style={{ minHeight: '7rem' }}>{c.description}</Card.Body>
-                              <Divider />
-                              <Card.Footer>
-                                <div
-                                  style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center'
-                                  }}>
-                                  <h5>37000篇文章， 5882页</h5>
-                                  <Button
-                                    size="small"
-                                    inverted
-                                    color="primary"
-                                    onClick={() => showArticles(c.id)}>
-                                    进入
-                                  </Button>
-                                </div>
-                              </Card.Footer>
-                            </Card>
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </Tabs.TabPanel>
-                  <Tabs.TabPanel itemValue="Item2">
-                    <div>The panel for Item1</div>
-                  </Tabs.TabPanel>
+                  {catalogResponse.list.map((item) => {
+                    return (
+                      <Tabs.TabPanel
+                        key={'panel-' + item.id}
+                        itemValue={item.id}
+                        extraClassName="c-catalog-panel">
+                        <Row gutter={{ x: 20, y: 32 }}>
+                          {item.children?.map((c, index) => {
+                            return (
+                              <Col sm={12} md={6} xl={4} key={`col-${index}`}>
+                                <Card
+                                  rise
+                                  block
+                                  extraClassName={
+                                    index % 2 == 0
+                                      ? 'c-catalog-background'
+                                      : 'c-catalog-background-2'
+                                  }
+                                  hasBorder={true}>
+                                  <Card.Header>
+                                    <Box
+                                      left={
+                                        <div className="c-catalog-flag">
+                                          {c.name && c.name.length > 0 && c.name[0]}
+                                        </div>
+                                      }
+                                      center={
+                                        <div className="c-catalog-name ellipsis">
+                                          <a href="#" onClick={() => showArticles(c.id)}>
+                                            {c.name || ''}
+                                          </a>
+                                        </div>
+                                      }
+                                    />
+                                  </Card.Header>
+                                  <Card.Body>
+                                    <div>
+                                      <LinesEllipsis
+                                        maxLine="3"
+                                        text={c.description}
+                                        ellipsis="..."
+                                        trimRight
+                                        basedOn="letters"
+                                      />
+                                    </div>
+                                  </Card.Body>
+                                  <Card.Footer>
+                                    <div
+                                      style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center'
+                                      }}>
+                                      <h5>37000篇文章， 5882页</h5>
+                                      <Button
+                                        size="small"
+                                        inverted
+                                        color="primary"
+                                        onClick={() => showArticles(c.id)}>
+                                        进入
+                                      </Button>
+                                    </div>
+                                  </Card.Footer>
+                                </Card>
+                              </Col>
+                            );
+                          })}
+                        </Row>
+                      </Tabs.TabPanel>
+                    );
+                  })}
                 </Tabs.Panels>
               </Tabs>
             </div>
           </Col>
-          <Col md={8}></Col>
         </Row>
       </div>
     </div>

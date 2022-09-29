@@ -3,3 +3,7 @@ interface Tokens {
   refreshToken?: string;
   token?: string;
 }
+
+interface WindowContextValue {
+  mdWindow?: boolean;
+}

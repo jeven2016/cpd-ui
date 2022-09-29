@@ -5,13 +5,12 @@ interface Catalog {
   order?: number;
   articleCount: number;
   description?: string;
+
+  children?: Catalog[];
 }
 
 interface CatalogPaload {
-  payload: {
-    Count: number;
-    List: Catalog[];
-  };
+  list: Catalog[];
 }
 
 interface Article {
