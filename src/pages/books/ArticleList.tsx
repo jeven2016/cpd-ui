@@ -1,10 +1,12 @@
 import {
   Affix,
   Box,
+  Breadcrumb,
   Button,
   Card,
   Col,
   Dropdown,
+  IconAccount,
   Input,
   Pagination,
   Responsive,
@@ -14,11 +16,12 @@ import {
   Tooltip,
   useMediaQuery
 } from 'react-windy-ui';
-import IconChangeView from '@/common/icons/IconChangeView';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { get } from '@/client/Request';
+import IconReturn from '@/common/icons/IconReturn';
+import IconChangeView from '@/common/icons/IconChangeView';
 
 interface CardListProps {
   list?: Article[];
@@ -62,7 +65,7 @@ const cells = [
     paramName: 'index',
     sortable: true,
     // fixed: 'left' as const,
-    width: '50px',
+    width: '100px',
     format: (text, row, tableIndex) => {
       return tableIndex + 1;
     }
@@ -85,7 +88,7 @@ const cells = [
     head: '创建日期',
     paramName: 'createDate',
     sortable: true,
-    width: '200px'
+    width: '300px'
   }
   // {
   //   head: '操作',
@@ -103,6 +106,7 @@ const colConf = {
 };
 
 export default function ArticleList() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const [type, setType] = useState<string>('card');
   const [pageInfo, set] = useState<PageInfo | null>(null);
@@ -211,16 +215,40 @@ export default function ArticleList() {
   return (
     <>
       <div className="c-content-area">
+        <Box
+          block
+          left={
+            <Breadcrumb>
+              <Breadcrumb.Item>
+                <IconAccount /> Home
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>Main</Breadcrumb.Item>
+              <Breadcrumb.Item active>Application</Breadcrumb.Item>
+            </Breadcrumb>
+          }
+          right={
+            <Space>
+              <Button
+                hasBox={false}
+                leftIcon={<IconReturn />}
+                onClick={() => navigate('/books/catalogs')}>
+                返回
+              </Button>
+            </Space>
+          }
+        />
+      </div>
+      <div className="c-content-area">
         <Card block extraClassName="white-panel">
           <Card.Header>
             <Box
+              block
               left={<div className="c-catalog-flag">A</div>}
               center={
                 <div className="c-catalog-name ellipsis">
                   <a href="#">测试测试</a>
                 </div>
               }
-              right={<div></div>}
             />
           </Card.Header>
         </Card>
@@ -235,10 +263,14 @@ export default function ArticleList() {
               alignRight="center"
               left={
                 <Space>
-                  <Input value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
-                  <Button type="primary" onClick={search}>
-                    {t('global.search.button')}
-                  </Button>
+                  <Input
+                    placeholder={t('global.search.placeholder')}
+                    value={searchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyUp={(e) => {
+                      e.keyCode == 13 && search();
+                    }}
+                  />
                 </Space>
               }
               right={!smallWindow && switchArea}

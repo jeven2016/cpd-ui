@@ -1,0 +1,43 @@
+.home-page {
+  background: url('./home.jpg') no-repeat;
+  background-size: cover;
+  background-clip: border-box;
+  height: 100vh;
+  width: 100%;
+}
+
+.health-page {
+  background: url('./2.jpg') no-repeat;
+  background-size: cover;
+  background-clip: border-box;
+  height: 100vh;
+  width: 100%;
+}
+
+.time-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 330px;
+  position: absolute;
+  top: 190px;
+  left: 45px;
+  color: #000;
+  background: #fff;
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+.info-bar {
+  align-items: center;
+  position: absolute;
+  top: 120px;
+  left: 5px;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #e15e2a;
+}

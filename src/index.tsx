@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-windy-ui/dist/wui.css';
 import '@/styles/default.scss';
@@ -8,6 +7,7 @@ import '@/common/config/i18n';
 import keycloak from '@/common/components/KeyCloak';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { AUTH_CONFIG } from '@/common/Constants';
+import App from '@/App';
 
 const eventLogger = (event: unknown, error: unknown) => {
   // console.log('onKeycloakEvent', event, error);
@@ -31,6 +31,8 @@ ReactDOM.render(
   </ReactKeycloakProvider>,
   document.getElementById('root')
 );
+
+// ReactDOM.render(<HomePage />, document.getElementById('root'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

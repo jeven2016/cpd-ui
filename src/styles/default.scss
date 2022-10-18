@@ -192,15 +192,23 @@ body {
   overflow-y: auto;
   //left: 0;
   top: 0;
-  padding: 1rem;
-  width: 250px;
+  margin: 1rem;
+  width: 15.625rem;
   z-index: 100;
 
   > .c-slider-content {
     height: 100%;
-    background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+    background: url('../assets/person.jpg') 40% 20% content-box;
     box-shadow: rgb(0 0 0 / 5%) 0 1.25rem 1.6875rem 0;
     border-radius: 0.75rem;
+    position: relative;
+    overflow: hidden;
+
+    > .c-slider-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(195deg, rgba(66, 66, 74, 0.9), rgba(25, 25, 25, 0.9));
+    }
 
     .menu-item {
       font-size: 1rem;
@@ -242,6 +250,7 @@ body {
       font-size: 1.25rem;
       font-weight: 600;
       height: $header-line-height;
+      color: #fff;
     }
   }
 }

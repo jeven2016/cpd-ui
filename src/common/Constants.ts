@@ -15,6 +15,6 @@ export const AUTH_CONFIG = {
  * 当屏幕窗口变化后，组件的折叠/展开的参数
  */
 export const LAYOUT_SETTING = {
-  CONTENT: { MIN: '16px', MAX: '255px' },
-  LEFT_SLIDER: { MIN: '-255px', MAX: '0px' }
+  CONTENT: { MIN: '1rem', MAX: '17.625rem' },
+  LEFT_SLIDER: { MIN: '-16.625rem', MAX: '0rem' }
 };

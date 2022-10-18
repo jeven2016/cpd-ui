@@ -20,13 +20,15 @@ export default function LeftSlider(props) {
   return (
     <animated.div className="c-slider" style={{ left: left }}>
       <div className="c-slider-content">
-        <div className="slider-title">
-          <Space>
-            <HomeIcon />
-            {!collapse && <span style={{ whiteSpace: 'nowrap' }}>{t('web.title')}</span>}
-          </Space>
+        <div className="c-slider-inner">
+          <div className="slider-title">
+            <Space>
+              <HomeIcon />
+              {!collapse && <span style={{ whiteSpace: 'nowrap' }}>{t('web.title')}</span>}
+            </Space>
+          </div>
+          <LeftMenu collapse={collapse} />
         </div>
-        <LeftMenu collapse={collapse} />
       </div>
     </animated.div>
   );
