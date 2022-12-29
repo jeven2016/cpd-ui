@@ -55,14 +55,27 @@ module.exports = {
   devServer: {
     port: 8088,
     proxy: {
-      '/api': 'http://localhost:9999'
-      // '/api': {
-      //   target: 'http://localhost:9999',
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/api': '/api'
-      //   }
-      // }
+      '/auth': {
+        target: 'http://localhost:9900',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/auth': '/auth'
+        }
+      },
+      '/proxy': {
+        target: 'http://localhost:9900',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/proxy': '/proxy'
+        }
+      },
+      '/internal': {
+        target: 'http://localhost:9900',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/internal': '/internal'
+        }
+      }
     }
   }
 };

@@ -11,10 +11,11 @@ axios.interceptors.request.use(
     const accessToken = localStorage.getItem('accessToken');
     config.data = JSON.stringify(config.data);
     const header = {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'custom-header': 'true'
     };
     if (accessToken) {
-      header['Authorization'] = 'Bearer ' + accessToken;
+      // header['Authorization'] = 'Bearer ' + accessToken;
     }
 
     config.headers = header;
@@ -30,7 +31,7 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
   (response) => {
-    if (response.data.errCode === 2) {
+    if (response?.data?.errCode === 2) {
       console.log('过期');
     }
     if (response.status == 401) {
@@ -40,7 +41,10 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log('请求出错：', error);
+    if (error?.response?.status === 401) {
+      msg(error);
+    }
+    return Promise.reject('401: invalid token');
   }
 );
 
@@ -57,8 +61,7 @@ export function get(url, params = {}) {
         params: params
       })
       .then((response: AxiosResponse) => {
-        showData(url, params, response.data);
-        resolve(response.data);
+        resolve(response?.data);
       })
       .catch((error) => {
         reject(error);
@@ -100,7 +103,7 @@ export function patch(url, data = {}) {
         resolve(response.data);
       },
       (err) => {
-        msag(err);
+        msg(err);
         reject(err);
       }
     );
@@ -121,7 +124,7 @@ export function put(url, data = {}) {
         resolve(response.data);
       },
       (err) => {
-        msag(err);
+        msg(err);
         reject(err);
       }
     );
@@ -161,14 +164,14 @@ export default function (fecth, url, param) {
 }
 
 //失败提示
-function msag(err) {
+function msg(err) {
   if (err && err.response) {
     switch (err.response.status) {
       case 400:
         alert('400: ' + err.response.data.error.details);
         break;
       case 401:
-        alert('未授权，请登录');
+        window.location.href = '/login';
         break;
 
       case 403:
