@@ -54,7 +54,8 @@ yarn add eslint-config-prettier eslint-plugin-prettier prettier --dev
 .env.development, .env.test, .env.production: Environment-specific settings.
 .env.development.local, .env.test.local, .env.production.local: Local overrides of environment-specific settings.
 ```
-Note: create-react-app创建的工程变量名必须以 REACT_APP 开头，单词大写，以 _下划线分割，否则会无法读取。
+
+Note: create-react-app 创建的工程变量名必须以 REACT*APP 开头，单词大写，以 *下划线分割，否则会无法读取。
 
 - 变量文件的加载的优先级
 
@@ -113,7 +114,7 @@ refer to : https://github.com/gsoft-inc/craco/blob/master/packages/craco/README.
 
 ### Others
 
-- create-react-app已经支持热更新，不需要自行设置
+- create-react-app 已经支持热更新，不需要自行设置
 
 ### 首页图片
 

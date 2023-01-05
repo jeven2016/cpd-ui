@@ -13,12 +13,7 @@
   "settings": {
     "import/resolver": {
       "alias": {
-        "map": [
-          [
-            "@",
-            "./src"
-          ]
-        ]
+        "map": [["@", "./src"]]
       }
     }
   },
@@ -30,10 +25,7 @@
     "ecmaVersion": 2021,
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
     //prettier错，显示warn级别
     "prettier/prettier": "warn",

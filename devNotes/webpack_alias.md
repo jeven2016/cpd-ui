@@ -1,6 +1,6 @@
-## webpack中使用alias
+## webpack 中使用 alias
 
-- 在craco.config.js中添加配置：
+- 在 craco.config.js 中添加配置：
 
 ```text
   webpack: {
@@ -17,7 +17,7 @@
 
 ```
 
-- 在tsconfig.jso中添加
+- 在 tsconfig.jso 中添加
 
 ```text
  "compilerOptions": {
@@ -28,36 +28,36 @@
   }
 ```
 
-- 在eslint中配置   
-  在webpack项目之中， 我们会借助alias别名提升代码效率和打包效率。
-  但是在使用了自定义的路径指向后，eslint就会对应产生找不到模块的报错。
+- 在 eslint 中配置  
+  在 webpack 项目之中， 我们会借助 alias 别名提升代码效率和打包效率。
+  但是在使用了自定义的路径指向后，eslint 就会对应产生找不到模块的报错。
 
 ```text
 Unable to resolve path to module '@/component' import/no-unresolved
 ```
 
-这个时候，就要使用npm包eslint-import-resolver-alias来解决了
+这个时候，就要使用 npm 包 eslint-import-resolver-alias 来解决了
 
 ```text
 yarn add eslint-import-resolver-alias --dev
 ```
 
-在.eslintrc.js文件中添加
+在.eslintrc.js 文件中添加
 
- ```text
- // eslint配置
-  "settings": {
-    "import/resolver": {
-      "alias": {
-        "map": [
-          ["@", "./src"]
-        ]
-      }
-    }
-  },
- ```
+```text
+// eslint配置
+ "settings": {
+   "import/resolver": {
+     "alias": {
+       "map": [
+         ["@", "./src"]
+       ]
+     }
+   }
+ },
+```
 
-**注意：在tsconfig.jso中的生效且能被idea识别的path是合并后的path, 这里就是"./src/*"**
+**注意：在 tsconfig.jso 中的生效且能被 idea 识别的 path 是合并后的 path, 这里就是"./src/\*"**
 
 ```text
 "baseUrl": ".",

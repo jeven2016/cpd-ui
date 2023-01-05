@@ -48,9 +48,9 @@ interface AjaxSettings {
 
 **不推荐的做法，去掉强制检查**
 
-在compilerOptions 中添加 "noImplicitAny": false  
-这里说一下 "noImplicitAny" 这个参数是将TypeScript从可选类型语言转换为强制类型检验语言，
-简单点说就是在JS中有一些不怎么规范的写法都会被TS提示警告，所以网上大部分人其实是推荐noImplicitAny=true的，
+在 compilerOptions 中添加 "noImplicitAny": false  
+这里说一下 "noImplicitAny" 这个参数是将 TypeScript 从可选类型语言转换为强制类型检验语言，
+简单点说就是在 JS 中有一些不怎么规范的写法都会被 TS 提示警告，所以网上大部分人其实是推荐 noImplicitAny=true 的，
 这样可以规范自己的代码，提高自己的编码能力
 
 ```text
