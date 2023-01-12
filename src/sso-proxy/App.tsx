@@ -139,7 +139,7 @@ function Home() {
     <>
       <div>
         hello , this is home page.
-        <Button onClick={getUserInfo}>我的信息</Button>
+        <Button onClick={getUserInfo2}>我的信息</Button>
         <Button onClick={getAllClients}>所有Clients</Button>
         <Button onClick={getProxyClients}>proxy Clients</Button>
         <Button onClick={getProfile}>Profile</Button>
